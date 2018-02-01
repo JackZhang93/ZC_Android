@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">微度绑卡</string>
+    <string name="add_credit_bank_card">填写信用卡信息</string>
+    <string name="input_phone">输入预留手机号</string>
+</resources>
