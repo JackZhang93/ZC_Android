@@ -1,4 +1,4 @@
-package com.uns.uu.uupaymentsdk;
+package com.uns.uu.uupaymentsdk.view;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.uns.uu.uupaymentsdk.R;
 
 /**
  * Created by zhen.liu on 2018/2/5.
