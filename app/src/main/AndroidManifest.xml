@@ -3,22 +3,25 @@
     package="com.uns.uu.uupaymentsdk">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
-<application
-        android:allowBackup="true"
+    <application
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BindCreditBankCardActivity">
+        <activity android:name=".view.TestActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BankQuestionActivity"/>
+        <!--绑定银行卡界面-->
+        <activity android:name=".view.BindBankCardActivity" />
+        <!--输入手机验证码界面-->
+        <activity android:name=".view.CheckSmsActivity" />
+        <!--绑定信用卡界面-->
+        <activity android:name=".view.BindCreditBankCardActivity" />
     </application>
 
 </manifest>

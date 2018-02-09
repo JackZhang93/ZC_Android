@@ -30,4 +30,69 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bind_credit_title" />
 
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="45.5dp"
+        android:background="#FFE9E9E9"
+        app:layout_constraintTop_toBottomOf="@+id/bind_credit_info" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/bind_credit_sms_title"
+        android:layout_width="58dp"
+        android:layout_height="60dp"
+        android:gravity="center_vertical"
+        android:text="验证码"
+        android:textColor="#FF000000"
+        android:textSize="19sp"
+        app:layout_constraintTop_toBottomOf="@+id/line1" />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/bind_credit_sms"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:inputType="number"
+        android:singleLine="true"
+        android:text="4324"
+        android:textColor="#FF000000"
+        android:textSize="19sp"
+        app:layout_constraintLeft_toRightOf="@+id/bind_credit_sms_title"
+        app:layout_constraintTop_toBottomOf="@+id/line1" />
+
+    <TextView
+        android:id="@+id/check_sms_send"
+        android:layout_width="102.5dp"
+        android:layout_height="18dp"
+        android:text="重新发送（60）"
+        android:textColor="#FF000000"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/line2"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/line1" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/line2"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#FFE9E9E9"
+        app:layout_constraintTop_toBottomOf="@+id/bind_credit_sms" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/bind_credit_sms_qua"
+        android:layout_width="106.5dp"
+        android:layout_height="22.5dp"
+        android:text="收不到验证码？"
+        android:textColor="#FF007AED"
+        android:textSize="15sp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line2" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/check_sms_ok"
+        android:layout_width="335dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="44dp"
+        android:background="#FF007AED"
+        app:layout_constraintTop_toBottomOf="@+id/bind_credit_sms_qua" />
 </android.support.constraint.ConstraintLayout>
