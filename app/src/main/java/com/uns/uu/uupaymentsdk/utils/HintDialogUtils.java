@@ -66,19 +66,21 @@ public class HintDialogUtils {
      */
     public void setContentArr(boolean isTextCenter, String[] contentArr) {
         ll_center_container.removeAllViews();
-        for (int i = 0; i < contentArr.length; i++) {
-            TextView textView = getTextView(isTextCenter, contentArr[i], LinearLayout.LayoutParams.MATCH_PARENT);
-            if (contentArr.length > 1) {
-                LinearLayout linearLayout = new LinearLayout(mContext);
-                linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-                linearLayout.setGravity(Gravity.TOP);
-                TextView tip = getTextView(isTextCenter, (i + 1) + "、", LinearLayout.LayoutParams.WRAP_CONTENT);
-                linearLayout.addView(tip);
-                linearLayout.addView(textView);
-                ll_center_container.addView(linearLayout);
-            } else {
-                ll_center_container.addView(textView);
+        if (contentArr != null) {
+            for (int i = 0; i < contentArr.length; i++) {
+                TextView textView = getTextView(isTextCenter, contentArr[i], LinearLayout.LayoutParams.MATCH_PARENT);
+                if (contentArr.length > 1) {
+                    LinearLayout linearLayout = new LinearLayout(mContext);
+                    linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                    linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+                    linearLayout.setGravity(Gravity.TOP);
+                    TextView tip = getTextView(isTextCenter, (i + 1) + "、", LinearLayout.LayoutParams.WRAP_CONTENT);
+                    linearLayout.addView(tip);
+                    linearLayout.addView(textView);
+                    ll_center_container.addView(linearLayout);
+                } else {
+                    ll_center_container.addView(textView);
+                }
             }
         }
     }
@@ -93,19 +95,21 @@ public class HintDialogUtils {
     public void setSelfView(boolean isTextCenter, String[] contentArr, View selfView) {
         ll_center_container.removeAllViews();
         ll_center_container.addView(selfView);
-        for (int i = 0; i < contentArr.length; i++) {
-            TextView textView = getTextView(isTextCenter, contentArr[i], LinearLayout.LayoutParams.MATCH_PARENT);
-            if (contentArr.length > 1) {
-                LinearLayout linearLayout = new LinearLayout(mContext);
-                linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-                linearLayout.setGravity(Gravity.TOP);
-                TextView tip = getTextView(isTextCenter, (i + 1) + "、", LinearLayout.LayoutParams.WRAP_CONTENT);
-                linearLayout.addView(tip);
-                linearLayout.addView(textView);
-                ll_center_container.addView(linearLayout);
-            } else {
-                ll_center_container.addView(textView);
+        if (contentArr != null) {
+            for (int i = 0; i < contentArr.length; i++) {
+                TextView textView = getTextView(isTextCenter, contentArr[i], LinearLayout.LayoutParams.MATCH_PARENT);
+                if (contentArr.length > 1) {
+                    LinearLayout linearLayout = new LinearLayout(mContext);
+                    linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                    linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+                    linearLayout.setGravity(Gravity.TOP);
+                    TextView tip = getTextView(isTextCenter, (i + 1) + "、", LinearLayout.LayoutParams.WRAP_CONTENT);
+                    linearLayout.addView(tip);
+                    linearLayout.addView(textView);
+                    ll_center_container.addView(linearLayout);
+                } else {
+                    ll_center_container.addView(textView);
+                }
             }
         }
     }
@@ -125,12 +129,20 @@ public class HintDialogUtils {
     }
 
     /**
-     * 设置左边按钮的文字与显示
+     * 设置左边和右边按钮的文字与显示
      *
      * @param showLeftBtn
      * @param leftString
      */
-    public void setLeft(boolean showLeftBtn, String leftString) {
+    public void setLeftOrRight(boolean showLeftBtn, String leftString, boolean showRightBtn, String rightString) {
+        if (showLeftBtn && showRightBtn) {
+            dialog_cancel.setBackground(mContext.getResources().getDrawable(R.drawable.dialog_btn_left_select));
+            dialog_ok.setBackground(mContext.getResources().getDrawable(R.drawable.dialog_btn_right_select));
+        } else if (showLeftBtn && !showRightBtn) {
+            dialog_cancel.setBackground(mContext.getResources().getDrawable(R.drawable.dialog_btn_left_or_right_select));
+        } else if (!showLeftBtn && showRightBtn) {
+            dialog_ok.setBackground(mContext.getResources().getDrawable(R.drawable.dialog_btn_left_or_right_select));
+        }
         if (showLeftBtn) {
             dialog_cancel.setVisibility(View.VISIBLE);
             dialog_cancel.setText(TextUtils.isEmpty(leftString) ? "取消" : leftString);
@@ -138,15 +150,6 @@ public class HintDialogUtils {
             dialog_cancel.setVisibility(View.GONE);
             view_center_line.setVisibility(View.GONE);
         }
-    }
-
-    /**
-     * 设置右边的文字与显示
-     *
-     * @param showRightBtn
-     * @param rightString
-     */
-    public void setRight(boolean showRightBtn, String rightString) {
         if (showRightBtn) {
             dialog_ok.setVisibility(View.VISIBLE);
             dialog_ok.setText(TextUtils.isEmpty(rightString) ? "知道了" : rightString);
@@ -158,7 +161,7 @@ public class HintDialogUtils {
 
     private void init(String title, boolean isTextCenter, String[] contentArr, boolean showLeftBtn, String leftString, boolean showRightBtn, String rightString) {
         contentView = View.inflate(mContext, R.layout.dialog_unreceive_verify_code, null);
-        dialog = new AlertDialog.Builder(mContext).create();
+        dialog = new AlertDialog.Builder(mContext, R.style.dialog).create();
         dialog.setView(contentView);
         dialog.setCanceledOnTouchOutside(false);
         dialog_title = (TextView) contentView.findViewById(R.id.dialog_title);
@@ -168,8 +171,7 @@ public class HintDialogUtils {
         view_center_line = contentView.findViewById(R.id.view_center_line);
 
         setTitle(title);
-        setLeft(showLeftBtn, leftString);
-        setRight(showRightBtn, rightString);
+        setLeftOrRight(showLeftBtn, leftString, showRightBtn, rightString);
         setContentArr(isTextCenter, contentArr);
         dialog_cancel.setOnClickListener(new View.OnClickListener() {
             @Override

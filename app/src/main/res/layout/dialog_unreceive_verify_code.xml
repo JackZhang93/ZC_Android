@@ -7,8 +7,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="105px"
-        android:layout_marginRight="105px"
+        android:layout_marginLeft="52dp"
+        android:layout_marginRight="52dp"
         android:background="@drawable/dialog_new_shape"
         android:orientation="vertical">
 
@@ -21,44 +21,21 @@
                 android:id="@+id/dialog_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="39px"
+                android:layout_marginTop="18dp"
                 android:gravity="center"
                 android:text="收不到验证码"
                 android:textColor="@color/black"
-                android:textSize="34px" />
+                android:textSize="17sp" />
 
             <LinearLayout
                 android:id="@+id/ll_center_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16px"
+                android:layout_marginTop="8dp"
                 android:orientation="vertical"
-                android:paddingLeft="35px"
-                android:paddingRight="35px">
+                android:paddingLeft="17dp"
+                android:paddingRight="17dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5px"
-                        android:lineSpacingExtra="5px"
-                        android:text="1、"
-                        android:textColor="@color/black"
-                        android:textSize="28px" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5px"
-                        android:lineSpacingExtra="5px"
-                        android:text="请确认当前是请确认"
-                        android:textColor="@color/black"
-                        android:textSize="28px" />
-                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
@@ -66,7 +43,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:layout_marginTop="26px"
+            android:layout_marginTop="13dp"
             android:background="#b6b6b8" />
 
         <LinearLayout
@@ -78,14 +55,14 @@
             <Button
                 android:id="@+id/dialog_cancel"
                 android:layout_width="0px"
-                android:layout_height="88px"
+                android:layout_height="44dp"
                 android:layout_weight="1"
-                android:background="@drawable/dialog_btn_select"
-                android:paddingBottom="17px"
-                android:paddingTop="17px"
+                android:background="@drawable/dialog_btn_left_select"
+                android:paddingBottom="9dp"
+                android:paddingTop="9dp"
                 android:text="取消"
                 android:textColor="@color/B6B6B8"
-                android:textSize="34px" />
+                android:textSize="17sp" />
 
             <View
                 android:id="@+id/view_center_line"
@@ -96,14 +73,14 @@
             <Button
                 android:id="@+id/dialog_ok"
                 android:layout_width="0dp"
-                android:layout_height="88px"
+                android:layout_height="44dp"
                 android:layout_weight="1"
-                android:background="@drawable/dialog_btn_select"
-                android:paddingBottom="17px"
-                android:paddingTop="17px"
+                android:background="@drawable/dialog_btn_right_select"
+                android:paddingBottom="9dp"
+                android:paddingTop="9dp"
                 android:text="知道了"
                 android:textColor="@color/color_007AED"
-                android:textSize="34px" />
+                android:textSize="17sp" />
 
         </LinearLayout>
     </LinearLayout>
