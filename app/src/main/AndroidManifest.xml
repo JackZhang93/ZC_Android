@@ -22,6 +22,8 @@
         <activity android:name=".view.CheckSmsActivity" />
         <!--绑定信用卡界面-->
         <activity android:name=".view.BindCreditBankCardActivity" />
+        <!--银行卡问题界面-->
+        <activity android:name=".view.BankQuestionActivity"/>
     </application>
 
 </manifest>
