@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.activity_bindcreditbankcard.*
  * Created by zhaoyan on 2018/1/31.
  * 绑定信用卡
  */
-class BindCreditBankCardActivity : BaseActivity() {
+class BindCreditBankCardForPayActivity : BaseActivity() {
     private var getCreditBankInfo: Boolean = false //获取到信用卡信息
     private lateinit var data: BindCreditCard
     override fun getLayout(): Int {
@@ -74,7 +74,7 @@ class BindCreditBankCardActivity : BaseActivity() {
                         intent.putExtra("data", data)
                         startActivity(intent)
                     } else {
-                        ToastUtils.showToast(this@BindCreditBankCardActivity, it?.rspMsg)
+                        ToastUtils.showToast(this@BindCreditBankCardForPayActivity, it?.rspMsg)
                     }
 
                 })
