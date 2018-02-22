@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/UUPaymentSDK.iml" filepath="$PROJECT_DIR$/UUPaymentSDK.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BindBankCard.iml" filepath="$PROJECT_DIR$/BindBankCard.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

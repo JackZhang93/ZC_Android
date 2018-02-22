@@ -9,7 +9,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_base)
+        setContentView(R.layout.alert_dialog_lauout)
         if (getLayout() != 0) {
             val view = LayoutInflater.from(baseContext).inflate(getLayout(), null)
             wallet_content.addView(view)
