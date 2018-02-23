@@ -1,6 +1,5 @@
 package com.uns.uu.uupaymentsdk;
 
-import android.os.Bundle;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.Editable;
