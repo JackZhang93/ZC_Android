@@ -37,7 +37,6 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/dimens_15"
             android:gravity="center"
-            android:text="建设银行储蓄卡"
             android:textColor="#6D6D72"
             android:textSize="@dimen/dimens_19" />
 
@@ -80,14 +79,13 @@
 
 
     <LinearLayout
-        android:id="@+id/bind_credit_accord"
-        android:layout_width="match_parent"
+        android:id="@+id/bind_bank_card"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimens_20"
-        android:layout_marginTop="13.5dp"
-        android:gravity="center_vertical"
-        android:minHeight="22dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:minHeight="@dimen/dimens_22"
+        android:paddingTop="13.5dp">
 
         <ImageView
             android:id="@+id/iv_check_protocol"
@@ -100,14 +98,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="同意" />
+            android:gravity="center_vertical"
+            android:minHeight="@dimen/dimens_22"
+            android:text="同意"
+            android:textSize="@dimen/dimens_13" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/tv_user_protocol"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:minHeight="@dimen/dimens_22"
             android:text="《用户协议》"
-            android:textColor="#007AED" />
+            android:textColor="#007AED"
+            android:textSize="@dimen/dimens_13" />
     </LinearLayout>
 
     <android.support.v7.widget.AppCompatTextView
