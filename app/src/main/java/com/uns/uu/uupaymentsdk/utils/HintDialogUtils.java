@@ -99,6 +99,23 @@ public class HintDialogUtils {
         }
     }
 
+    public void setContent(boolean isTextCenter, String content) {
+        //非空判断
+        if (ll_center_container != null) {
+            ll_center_container.removeAllViews();
+        }
+        TextView textView = getTextView(isTextCenter, content, LinearLayout
+                .LayoutParams.MATCH_PARENT);
+        LinearLayout linearLayout = new LinearLayout(mContext);
+        linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+        linearLayout.setGravity(Gravity.TOP);
+        linearLayout.addView(textView);
+        if (ll_center_container != null) {
+            ll_center_container.addView(linearLayout);
+        }
+    }
+
     /**
      * 添加自己定义的view
      *

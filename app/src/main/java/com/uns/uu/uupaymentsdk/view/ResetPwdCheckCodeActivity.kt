@@ -82,7 +82,8 @@ class ResetPwdCheckCodeActivity : BaseActivity() {
 
     private fun showTip(content:String) {
         val dialog = HintDialogUtils(this)
-        dialog.setLeftOrRight(true,content,false,"")
+        dialog.setLeftOrRight(false,"",true,"知道了")
+        dialog.setContent(true, content)
         dialog.showDialog()
     }
 

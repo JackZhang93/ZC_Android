@@ -1,12 +1,15 @@
 package com.uns.uu.uupaymentsdk.view
 
+import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
 import com.uns.uu.uupaymentsdk.R
+import com.uns.uu.uupaymentsdk.constant.CardBinConstant
 import com.uns.uu.uupaymentsdk.utils.HintDialogUtils
 import com.uns.uu.uupaymentsdk.utils.PatterUtils
 import com.uns.uu.uupaymentsdk.utils.ToastUtils
+import com.uns.uu.uupaymentsdk.viewmodel.GetCardInfoViewModel
 import kotlinx.android.synthetic.main.activity_input_bind_card.*
 
 /**
@@ -26,7 +29,8 @@ class InputBindCardInfoActivity : BaseActivity() {
 
     override fun initView() {
         bankCard = intent.getStringExtra("bankCard")
-        et_card_type.text = "建设银行储蓄卡"
+        et_card_type.text = intent.getStringExtra("cardType")
+
         et_phone.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
 
@@ -50,7 +54,7 @@ class InputBindCardInfoActivity : BaseActivity() {
     }
 
     override fun initData() {
-        iv_check_protocol.setOnClickListener {
+        bind_bank_card.setOnClickListener {
             isChecked = !isChecked
             if (isChecked) {
                 iv_check_protocol.setImageResource(R.mipmap.user_protocol_checked)
@@ -79,16 +83,17 @@ class InputBindCardInfoActivity : BaseActivity() {
             }
         }
 
-        tv_new_reset_pwd.setOnClickListener {//跳转到ChooseResetPwdActivity
+        tv_new_reset_pwd.setOnClickListener {
+            //跳转到ChooseResetPwdActivity
             ToastUtils.showToast(baseContext, "换个方式重置密码")
         }
 
     }
 
-    private fun showTip(content:String) {
+    private fun showTip(content: String) {
         val dialog = HintDialogUtils(this)
-        dialog.setLeftOrRight(false,"",true,"知道了")
-        dialog.setContentArr(true, arrayListOf(content))
+        dialog.setLeftOrRight(false, "", true, "知道了")
+        dialog.setContent(true, content)
         dialog.showDialog()
     }
 }
