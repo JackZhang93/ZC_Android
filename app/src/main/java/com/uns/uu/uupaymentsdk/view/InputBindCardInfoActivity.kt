@@ -88,7 +88,7 @@ class InputBindCardInfoActivity : BaseActivity() {
     private fun showTip(content:String) {
         val dialog = HintDialogUtils(this)
         dialog.setLeftOrRight(false,"",true,"知道了")
-        dialog.setContentArr(true, arrayOf(content))
+        dialog.setContentArr(true, arrayListOf(content))
         dialog.showDialog()
     }
 }
