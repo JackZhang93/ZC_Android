@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimens_25"
+        android:paddingBottom="@dimen/dimens_5"
+        android:paddingTop="@dimen/dimens_15"
+        android:text="请绑定持卡人的银行卡以找回密码"
+        android:textColor="#B6B6B8"
+        android:textSize="@dimen/dimens_15" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimens_0.5"
+        android:layout_marginLeft="@dimen/dimens_20"
+        android:layout_marginRight="@dimen/dimens_20"
+        android:background="#E9E9E9" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimens_60"
+        android:paddingLeft="@dimen/dimens_20">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="持卡人"
+            android:textColor="#000"
+            android:textSize="@dimen/dimens_19" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tv_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dimens_30"
+            android:gravity="center"
+            android:textColor="#B6B6B8"
+            android:textSize="@dimen/dimens_19" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimens_0.5"
+        android:layout_marginLeft="@dimen/dimens_20"
+        android:layout_marginRight="@dimen/dimens_20"
+        android:background="#E9E9E9" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimens_60"
+        android:layout_marginTop="@dimen/dimens_15"
+        android:paddingLeft="@dimen/dimens_20">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="卡号"
+            android:textColor="#000"
+            android:textSize="@dimen/dimens_19" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/et_input_bank_card"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dimens_49"
+            android:background="@null"
+            android:hint="请输入卡号"
+            android:inputType="number"
+            android:maxLines="1"
+            android:textColor="#000"
+            android:textColorHint="#B6B6B8"
+            android:textSize="@dimen/dimens_19" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimens_0.5"
+        android:layout_marginLeft="@dimen/dimens_20"
+        android:layout_marginRight="@dimen/dimens_20"
+        android:background="#E9E9E9" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_input_card_next"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimens_44"
+        android:layout_marginLeft="@dimen/dimens_20"
+        android:layout_marginRight="@dimen/dimens_20"
+        android:layout_marginTop="@dimen/dimens_44"
+        android:background="@drawable/btn_bg_unselect"
+        android:gravity="center"
+        android:text="下一步"
+        android:textColor="#fff" />
+
+</LinearLayout>

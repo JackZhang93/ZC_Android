@@ -21,7 +21,7 @@ class TestActivity : BaseActivity() {
 
 
         button3.setOnClickListener {
-            startActivity(Intent(baseContext, CheckSmsActivity::class.java))
+            startActivity(Intent(baseContext, InputBankCardActivity::class.java))
         }
     }
 

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4F5F7"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/dimens_5"
+        android:paddingLeft="@dimen/dimens_20"
+        android:paddingTop="@dimen/dimens_15.5"
+        android:text="请输入持卡人本人的银行卡"
+        android:textColor="#B6B6B8"
+        android:textSize="@dimen/dimens_15" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimens_60"
+        android:background="#fff"
+        android:paddingLeft="@dimen/dimens_20">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="卡号"
+            android:textColor="#000"
+            android:textSize="@dimen/dimens_19" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tv_card_num"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/dimens_15"
+            android:inputType="number"
+            android:text="建设银行储蓄卡（6442）"
+            android:maxLines="1"
+            android:textColor="#B6B6B8"
+            android:textSize="@dimen/dimens_19" />
+
+    </LinearLayout>
+
+
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/dimens_5"
+        android:paddingLeft="@dimen/dimens_20"
+        android:paddingTop="@dimen/dimens_24"
+        android:text="请填写银行预留信息"
+        android:textColor="#B6B6B8"
+        android:textSize="@dimen/dimens_15" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimens_60"
+        android:background="#fff"
+        android:paddingLeft="@dimen/dimens_20">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="姓名"
+            android:textColor="#000"
+            android:textSize="@dimen/dimens_19" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/et_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dimens_15"
+            android:background="@null"
+            android:hint="请输入完整姓名"
+            android:inputType="number"
+            android:maxLines="1"
+            android:textColor="#000"
+            android:textColorHint="#B6B6B8"
+            android:textSize="@dimen/dimens_19" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimens_0.5"
+        android:background="#E9E9E9" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimens_60"
+        android:background="#fff"
+        android:paddingLeft="@dimen/dimens_20">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="身份证"
+            android:textColor="#000"
+            android:textSize="@dimen/dimens_19" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/et_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dimens_15"
+            android:background="@null"
+            android:hint="请输入证件号码"
+            android:inputType="number"
+            android:maxLines="1"
+            android:textColor="#000"
+            android:textColorHint="#B6B6B8"
+            android:textSize="@dimen/dimens_19" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/dimens_15"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimens_60"
+        android:background="#fff"
+        android:paddingLeft="@dimen/dimens_20">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="手机号"
+            android:textColor="#000"
+            android:textSize="@dimen/dimens_19" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dimens_15"
+            android:background="@null"
+            android:hint="请输入预留手机号"
+            android:inputType="number"
+            android:maxLines="1"
+            android:textColor="#000"
+            android:textColorHint="#B6B6B8"
+            android:textSize="@dimen/dimens_19" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/bind_credit_accord"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimens_20"
+        android:layout_marginTop="13.5dp"
+        android:gravity="center_vertical"
+        android:minHeight="22dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_check_protocol"
+            android:layout_width="@dimen/dimens_10"
+            android:layout_height="@dimen/dimens_10"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/user_protocol_checked" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="同意" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tv_user_protocol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="《用户协议》"
+            android:textColor="#007AED" />
+    </LinearLayout>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_next"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimens_44"
+        android:layout_marginLeft="@dimen/dimens_20"
+        android:layout_marginRight="@dimen/dimens_20"
+        android:layout_marginTop="@dimen/dimens_44"
+        android:background="@drawable/btn_bg_unselect"
+        android:gravity="center"
+        android:text="下一步"
+        android:textColor="#fff" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_new_reset_pwd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dimens_15"
+        android:text="换个方式重置密码"
+        android:textColor="#007AED"
+        android:textSize="@dimen/dimens_15" />
+</LinearLayout>
