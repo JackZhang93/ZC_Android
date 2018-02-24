@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="dimens_1">1dp</dimen>
+    <dimen name="dimens_5">5dp</dimen>
     <dimen name="dimens_20">20dp</dimen>
     <dimen name="dimens_11">11dp</dimen>
     <dimen name="dimens_42">42dp</dimen>
@@ -8,4 +10,6 @@
     <dimen name="dimens_60">60dp</dimen>
     <dimen name="dimens_19">19dp</dimen>
     <dimen name="dimens_17">17dp</dimen>
+    <dimen name="dimens_77">77dp</dimen>
+    <dimen name="dimens_124">124dp</dimen>
 </resources>

@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <application
+        android:allowBackup="false"
+        android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -24,6 +26,7 @@
         <activity android:name=".view.BindCreditBankCardActivity" />
         <!--银行卡问题界面-->
         <activity android:name=".view.BankQuestionActivity"/>
+        <activity android:name=".view.BindCreditBankCardForPayActivity" />
     </application>
 
 </manifest>

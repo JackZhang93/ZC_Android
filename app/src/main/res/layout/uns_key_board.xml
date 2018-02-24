@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.inputmethodservice.KeyboardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/kv_lyt_keyboard"
+    android:paddingTop="@dimen/dimens_1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffe6e6e6"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:keyBackground="@drawable/bg_keyboard_btn"
+    android:keyTextColor="#333"
+    android:shadowColor="@color/transparent" />
+
+    <!--// background是整个键盘View的背景，设置了键的xxxgap后，中间的缝隙就会是这个背景色--><!--// keyBackground是每个键的背景--><!--// keyTextColor是每个键中字符的textColor--><!--// shadowColor是每个键中字符的shadow，请设置为全透明！！！--><!--// keyPreviewHeight是预览框的高度！！！--><!--// keyPreviewLayout是预览框对应的布局，跟布局必须是TextView！！！-->

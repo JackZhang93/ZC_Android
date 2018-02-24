@@ -15,6 +15,7 @@ import com.uns.uu.uupaymentsdk.bean.BindCreditCard
 import com.uns.uu.uupaymentsdk.bean.CheckCard
 import com.uns.uu.uupaymentsdk.constant.CardBinConstant
 import com.uns.uu.uupaymentsdk.constant.Constant
+import com.uns.uu.uupaymentsdk.utils.HintDialogUtils
 import com.uns.uu.uupaymentsdk.utils.PatterUtils
 import com.uns.uu.uupaymentsdk.utils.ToastUtils
 import com.uns.uu.uupaymentsdk.viewmodel.GetCardInfoViewModel
@@ -25,7 +26,8 @@ import kotlinx.android.synthetic.main.activity_bindbankcard.*
  * 绑定银行卡界面
  */
 class BindBankCardActivity : BaseActivity() {
-    private lateinit var data: BindCreditCard
+    private lateinit var mData: BindCreditCard
+    private lateinit var mDialog: HintDialogUtils
     override fun getLayout(): Int {
         return R.layout.activity_bindbankcard
     }
@@ -68,13 +70,10 @@ class BindBankCardActivity : BaseActivity() {
                         val intent = Intent(baseContext, CheckSmsActivity::class.java)
                         intent.putExtra("phone", bind_credit_card_phone_info.text.trim().toString())
                         intent.putExtra("type", 1)
-//                        data.apply {
-//                            cvv2=
-//                        }
-                        intent.putExtra("data",data)
+                        intent.putExtra("data", mData)
                         startActivity(intent)
                     } else {
-                        ToastUtils.showToast(this@BindBankCardActivity,it?.rspMsg)
+                        ToastUtils.showToast(this@BindBankCardActivity, it?.rspMsg)
                     }
 
                 })
@@ -84,9 +83,18 @@ class BindBankCardActivity : BaseActivity() {
             }
         }
         //银行卡预留手机号提示
-        bind_bank_phone_hint.setOnClickListener {
-            Toast.makeText(baseContext, "银行卡预留手机号说明", Toast.LENGTH_LONG).show()
+        mDialog = HintDialogUtils(this@BindBankCardActivity, "预留手机号说明", arrayListOf("请咨询您的发卡机构是否提供支持" +
+                "微度的卡片。", "没有预留、手机号忘记或者已停用" +
+                "请联系银行客服更新处理。"))
+        mDialog.setLeftOrRight(false, "", true, "")
+        try {
+            bind_bank_phone_hint.setOnClickListener {
+                mDialog.showDialog()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
+
 
         GetCardInfoViewModel().getCardInfo("6222620110028944586").observe(this, Observer {
             if (CardBinConstant.YES == it?.retCode) {

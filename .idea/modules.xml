@@ -3,8 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/BindBankCard.iml" filepath="$PROJECT_DIR$/.idea/BindBankCard.iml" />
+      <module fileurl="file://$PROJECT_DIR$/UUPaymentSDK.iml" filepath="$PROJECT_DIR$/UUPaymentSDK.iml" />
       <module fileurl="file://D:\workspace\android\BindBankCard\UUPaymentSDK.iml" filepath="D:\workspace\android\BindBankCard\UUPaymentSDK.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/unstoast/unstoast.iml" filepath="$PROJECT_DIR$/unstoast/unstoast.iml" />
     </modules>
   </component>
 </project>

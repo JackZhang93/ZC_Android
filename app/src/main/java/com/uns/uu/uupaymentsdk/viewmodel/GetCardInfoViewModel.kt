@@ -10,6 +10,7 @@ import com.uns.uu.uupaymentsdk.network.MySubscriber
 import com.uns.uu.uupaymentsdk.network.NetWorkRequest
 import com.uns.uu.uupaymentsdk.utils.MD5
 import com.uns.uu.uupaymentsdk.utils.MyLogger
+import com.uns.uu.uupaymentsdk.utils.Utils
 
 /**
  * Created by zhaoyan on 2018/2/6.
@@ -22,18 +23,20 @@ class GetCardInfoViewModel : ViewModel() {
      */
     fun getCardInfo(cardId: String): MutableLiveData<CardBin> {
         val data = MutableLiveData<CardBin>()
-        NetWorkRequest.cheakCard(cardId, object : MySubscriber<CardBin>() {
-            override fun onNext(t: CardBin?) {
-                logger.d(t?.toString())
-                data.postValue(t)
-            }
+        Utils.getThread {
+            NetWorkRequest.cheakCard(cardId, object : MySubscriber<CardBin>() {
+                override fun onNext(t: CardBin?) {
+                    logger.d(t?.toString())
+                    data.postValue(t)
+                }
 
-            override fun onError(e: Throwable?) {
-                super.onError(e)
-                data.postValue(CardBin())
-            }
+                override fun onError(e: Throwable?) {
+                    super.onError(e)
+                    data.postValue(CardBin())
+                }
 
-        })
+            })
+        }.start()
         return data
     }
 
@@ -43,27 +46,29 @@ class GetCardInfoViewModel : ViewModel() {
      */
     fun validCardNo(bean: CheckCard): MutableLiveData<RspInfo> {
         val data = MutableLiveData<RspInfo>()
-        val arrayMap = ArrayMap<String, String>()
-        arrayMap.put("merchantId", bean.merchantId)
-        arrayMap.put("customerId", bean.customerId)
-        arrayMap.put("cardNo", bean.cardNo)
-        arrayMap.put("accountType", bean.accountType)
-        val mac = StringBuffer().append("merchantId=").append(bean
-                .merchantId).append("&customerId=").append(bean.customerId).append("&cardNo=")
-                .append(bean.cardNo).append("&merchantKey=").append(bean.merchantKey)
-        MyLogger.kLog().d(mac)
-        arrayMap.put("mac", MD5.getMD5ofStr(mac.toString()))
-        NetWorkRequest.validCardNo(arrayMap, object : MySubscriber<RspInfo?>() {
-            override fun onNext(t: RspInfo?) {
-                logger.d(t?.toString())
-                data.postValue(t)
-            }
+        Utils.getThread {
+            val arrayMap = ArrayMap<String, String>()
+            arrayMap["merchantId"] = bean.merchantId
+            arrayMap["customerId"] = bean.customerId
+            arrayMap["cardNo"] = bean.cardNo
+            arrayMap["accountType"] = bean.accountType
+            val mac = StringBuffer().append("merchantId=").append(bean
+                    .merchantId).append("&customerId=").append(bean.customerId).append("&cardNo=")
+                    .append(bean.cardNo).append("&merchantKey=").append(bean.merchantKey)
+            MyLogger.kLog().d(mac)
+            arrayMap["mac"] = MD5.getMD5ofStr(mac.toString())
+            NetWorkRequest.validCardNo(arrayMap, object : MySubscriber<RspInfo?>() {
+                override fun onNext(t: RspInfo?) {
+                    logger.d(t?.toString())
+                    data.postValue(t)
+                }
 
-            override fun onError(e: Throwable?) {
-                super.onError(e)
-                data.postValue(RspInfo())
-            }
-        })
+                override fun onError(e: Throwable?) {
+                    super.onError(e)
+                    data.postValue(RspInfo())
+                }
+            })
+        }.start()
         return data
     }
 }
