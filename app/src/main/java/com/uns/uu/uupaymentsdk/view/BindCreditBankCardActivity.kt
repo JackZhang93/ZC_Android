@@ -3,6 +3,7 @@ package com.uns.uu.uupaymentsdk.view
 import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.content.Intent
+import android.text.Editable
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextPaint
@@ -21,6 +22,8 @@ import com.uns.uu.uupaymentsdk.constant.Constant
 import com.uns.uu.uupaymentsdk.utils.HintDialogUtils
 import com.uns.uu.uupaymentsdk.utils.PatterUtils
 import com.uns.uu.uupaymentsdk.utils.ToastUtils
+import com.uns.uu.uupaymentsdk.view.utils.SimpleAfterTextWatcher
+import com.uns.uu.uupaymentsdk.view.utils.UnsViewUtils
 import com.uns.uu.uupaymentsdk.viewmodel.GetCardInfoViewModel
 import kotlinx.android.synthetic.main.activity_bindcreditbankcard.*
 
@@ -32,6 +35,9 @@ class BindCreditBankCardActivity : BaseActivity() {
     private var mGetCreditBankInfo: Boolean = false //获取到信用卡信息
     private lateinit var mData: BindCreditCard
     private lateinit var mDialog: HintDialogUtils
+    private var hasDate: Boolean = false //有效期
+    private var hasCvv2: Boolean = false //cvv2
+    private var isClick: Boolean = false //是否同意条款
     override fun getLayout(): Int {
         return R.layout.activity_bindcreditbankcard
     }
@@ -60,34 +66,56 @@ class BindCreditBankCardActivity : BaseActivity() {
         bind_credit_accord_info.text = spannableString
         //同意的点击事件
         bind_credit_accord.setOnClickListener {
-
-            Toast.makeText(baseContext, "同意icon改变", Toast.LENGTH_LONG).show()
-        }
-        bind_credit_ok.isClickable = mGetCreditBankInfo
-        bind_credit_ok.setOnClickListener {
-            if (PatterUtils.matchPhone(bind_credit_card_phone_info.text)) {
-
-                GetCardInfoViewModel().validCardNo(CheckCard()).observe(this, Observer {
-                    if (Constant.REQ_SUCCESS == it?.rspCode) {
-                        val intent = Intent(baseContext, CheckSmsActivity::class.java)
-                        intent.putExtra("phone", bind_credit_card_phone_info.text.trim().toString())
-                        intent.putExtra("type", 2)
-                        mData.apply {
-                            validTime = bind_credit_card_time_info.text.toString().trim()
-                            cvv2 = bind_credit_card_cvv2_info.text.toString().trim()
-                        }
-                        intent.putExtra("data", mData)
-                        startActivity(intent)
-                    } else {
-                        ToastUtils.showToast(this@BindCreditBankCardActivity, it?.rspMsg)
-                    }
-
-                })
-
+            if (!isClick) {
+                bind_credit_icon.setImageResource(R.mipmap.user_protocol_checked)
             } else {
-                Toast.makeText(baseContext, "请输入正确的手机号码", Toast.LENGTH_LONG).show()
+                bind_credit_icon.setImageResource(R.mipmap.user_protocol_uncheck)
             }
+            isClick = !isClick
+            check()
         }
+        //选择有效期
+        bind_credit_card_time_info.setOnClickListener {
+            hasDate = true
+            check()
+        }
+        //填写cvv2
+        bind_credit_card_cvv2_info.addTextChangedListener(object : SimpleAfterTextWatcher() {
+            override fun afterTextChanged(s: Editable?) {
+                hasCvv2 = s?.length ?: 0 >= 3
+                check()
+            }
+
+        })
+        UnsViewUtils.nextViewOk(bind_credit_ok, false)
+        //下一步
+        bind_credit_ok.setOnClickListener {
+            //检查卡片是否绑定
+            GetCardInfoViewModel().validCardNo(CheckCard()).observe(this, Observer {
+                if (Constant.REQ_SUCCESS == it?.rspCode) {
+                    val intent = Intent(baseContext, CheckSmsActivity::class.java)
+                    intent.putExtra("phone", bind_credit_card_phone_info.text.trim().toString())
+                    intent.putExtra("type", 2)
+                    mData.apply {
+                        validTime = bind_credit_card_time_info.text.toString().trim()
+                        cvv2 = bind_credit_card_cvv2_info.text.toString().trim()
+                    }
+                    intent.putExtra("data", mData)
+                    startActivity(intent)
+                } else {
+                    ToastUtils.showToast(this@BindCreditBankCardActivity, it?.rspMsg)
+                }
+
+            })
+        }
+        //检查手机号
+        bind_credit_card_phone_info.addTextChangedListener(object : SimpleAfterTextWatcher() {
+            override fun afterTextChanged(s: Editable?) {
+                check()
+            }
+        })
+
+
         mDialog = HintDialogUtils(this@BindCreditBankCardActivity)
         //信用卡有效期说明提示
         val imageView = ImageView(this)
@@ -113,13 +141,24 @@ class BindCreditBankCardActivity : BaseActivity() {
         }
     }
 
+    //设置下一步按钮是否可以点击
+    private fun check() {
+        if (mGetCreditBankInfo && hasDate && hasCvv2 && isClick && PatterUtils.matchPhone
+                (bind_credit_card_phone_info.text)) {
+            UnsViewUtils.nextViewOk(bind_credit_ok, true)
+        } else {
+            UnsViewUtils.nextViewOk(bind_credit_ok, false)
+        }
+    }
+
     @SuppressLint("SetTextI18n")
     override fun initData() {
+        //获取信用卡信息
         GetCardInfoViewModel().getCardInfo("6250861322900100").observe(this, Observer {
             if (CardBinConstant.YES == it?.retCode) {
                 bind_credit_card_type_info.text = "${it.data?.issName}  ${it.data?.cardTypeName}"
                 mGetCreditBankInfo = true
-                bind_credit_ok.isClickable = mGetCreditBankInfo
+                check()
                 mData = BindCreditCard().apply {
                     cardNo = "6250861322900100"
                     bankCode = it.data.issuerCode

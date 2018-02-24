@@ -2,6 +2,7 @@
 <resources>
     <dimen name="dimens_0.5">0.5dp</dimen>
     <dimen name="dimens_1">1dp</dimen>
+    <dimen name="dimens_1.5">1.5dp</dimen>
     <dimen name="dimens_3">3dp</dimen>
     <dimen name="dimens_4">4dp</dimen>
     <dimen name="dimens_5">5dp</dimen>
@@ -15,6 +16,7 @@
     <dimen name="dimens_18">18dp</dimen>
     <dimen name="dimens_19">19dp</dimen>
     <dimen name="dimens_20">20dp</dimen>
+    <dimen name="dimens_21">21dp</dimen>
     <dimen name="dimens_23">23dp</dimen>
     <dimen name="dimens_24">24dp</dimen>
     <dimen name="dimens_25">25dp</dimen>
@@ -23,11 +25,18 @@
     <dimen name="dimens_35">35dp</dimen>
     <dimen name="dimens_42">42dp</dimen>
     <dimen name="dimens_44">44dp</dimen>
+    <dimen name="dimens_45">45dp</dimen>
     <dimen name="dimens_48">48dp</dimen>
     <dimen name="dimens_49">49dp</dimen>
+    <dimen name="dimens_56.5">56.5dp</dimen>
     <dimen name="dimens_59">59dp</dimen>
     <dimen name="dimens_60">60dp</dimen>
     <dimen name="dimens_77">77dp</dimen>
     <dimen name="dimens_124">124dp</dimen>
     <dimen name="dimens_270">270dp</dimen>
+    <dimen name="dimens_16">16dp</dimen>
+    <dimen name="dimens_3.5">3.5dp</dimen>
+    <dimen name="dimens_22">22dp</dimen>
+    <dimen name="dimens_7">7dp</dimen>
+    <dimen name="dimens_46">46dp</dimen>
 </resources>

@@ -3,6 +3,7 @@ package com.uns.uu.uupaymentsdk.view
 import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.os.Bundle
+import android.os.Handler
 import android.view.Gravity
 import android.widget.Toast
 import com.uns.uu.unstoast.UnsToast
@@ -11,6 +12,7 @@ import com.uns.uu.uupaymentsdk.bean.BindBankCard
 import com.uns.uu.uupaymentsdk.bean.BindCreditCard
 import com.uns.uu.uupaymentsdk.constant.Constant
 import com.uns.uu.uupaymentsdk.utils.HintDialogUtils
+import com.uns.uu.uupaymentsdk.utils.RefreshVerifyCode
 import com.uns.uu.uupaymentsdk.utils.ToastUtils
 import com.uns.uu.uupaymentsdk.viewmodel.BindCardViewModel
 import com.uns.uu.uupaymentsdk.viewmodel.SendSmsViewModel
@@ -24,6 +26,8 @@ class CheckSmsActivity : BaseActivity() {
     private lateinit var mPhone: String             //手机号码
     private lateinit var mDialog: HintDialogUtils   //提示框
     private var mType = -1                          //类型
+    private lateinit var refresh: RefreshVerifyCode
+    private lateinit var handler: Handler
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mType = intent.getIntExtra("type", -1)
@@ -44,13 +48,17 @@ class CheckSmsActivity : BaseActivity() {
     }
 
     override fun initData() {
+        handler = Handler()
+        refresh = RefreshVerifyCode(check_sms_send,handler)
         check_sms_send.setOnClickListener {
             check_sms_send.isClickable = false
             //发送短信
+            getVerifyCode()
             SendSmsViewModel().sendSmS("1120140210111823001", mPhone).observe(this, Observer {
 
             })
         }
+        getVerifyCode()
         check_sms_ok.setOnClickListener {
             if (mType == 2) {
                 val bindCreditCard = intent.getParcelableExtra<BindCreditCard>("data")
@@ -102,8 +110,14 @@ class CheckSmsActivity : BaseActivity() {
         }
     }
 
+    //获取手机验证码
+    private fun getVerifyCode() {
+        refresh.sure()
+        refresh.setCount(60)
+        handler.post(refresh)
+    }
+
     override fun onStop() {
-//        UnsKeyBoardUtils.shared(this@CheckSmsActivity, bind_credit_sms)?.hideKeyboard()
         super.onStop()
     }
 }
