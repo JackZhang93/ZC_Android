@@ -29,13 +29,7 @@ class InputBindCardInfoActivity : BaseActivity() {
 
     override fun initView() {
         bankCard = intent.getStringExtra("bankCard")
-        GetCardInfoViewModel().getCardInfo(bankCard).observe(this, Observer {
-            if (CardBinConstant.YES == it?.retCode) {
-                et_card_type.text = "${it.data?.issName}${it.data?.cardTypeName}"
-            } else {
-                showTip(bankCard)
-            }
-        })
+        et_card_type.text = intent.getStringExtra("cardType")
 
         et_phone.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
@@ -89,15 +83,16 @@ class InputBindCardInfoActivity : BaseActivity() {
             }
         }
 
-        tv_new_reset_pwd.setOnClickListener {//跳转到ChooseResetPwdActivity
+        tv_new_reset_pwd.setOnClickListener {
+            //跳转到ChooseResetPwdActivity
             ToastUtils.showToast(baseContext, "换个方式重置密码")
         }
 
     }
 
-    private fun showTip(content:String) {
+    private fun showTip(content: String) {
         val dialog = HintDialogUtils(this)
-        dialog.setLeftOrRight(false,"",true,"知道了")
+        dialog.setLeftOrRight(false, "", true, "知道了")
         dialog.setContent(true, content)
         dialog.showDialog()
     }

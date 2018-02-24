@@ -1,9 +1,13 @@
 package com.uns.uu.uupaymentsdk.view
 
+import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
 import com.uns.uu.uupaymentsdk.R
+import com.uns.uu.uupaymentsdk.constant.CardBinConstant
+import com.uns.uu.uupaymentsdk.utils.HintDialogUtils
+import com.uns.uu.uupaymentsdk.viewmodel.GetCardInfoViewModel
 import kotlinx.android.synthetic.main.activity_input_bank_card.*
 
 /**
@@ -22,9 +26,18 @@ class InputBankCardActivity : BaseActivity() {
         tv_user_name.text = getHideName("马化腾")
         tv_input_card_next.setOnClickListener {
             if (canClick) {
-                val intent = Intent(baseContext, InputBindCardInfoActivity::class.java)
-                intent.putExtra("bankCard", et_input_bank_card.text.toString().trim())
-                startActivity(intent)
+                GetCardInfoViewModel().getCardInfo("6250861322900100").observe(this, Observer {
+                    if (CardBinConstant.YES == it?.retCode) {
+                        val intent = Intent(baseContext, InputBindCardInfoActivity::class.java)
+                        intent.putExtra("bankCard", et_input_bank_card.text.toString().trim())
+                        intent.putExtra("cardType","${it.data?.issName}${it.data?.cardTypeName}")
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        showTip(it?.retCode+"")
+                    }
+                })
+
             }
         }
     }
@@ -58,6 +71,13 @@ class InputBankCardActivity : BaseActivity() {
         }
         sb.append(name.substring(name.length - 1))
         return sb.toString()
+    }
+
+    private fun showTip(content:String) {
+        val dialog = HintDialogUtils(this)
+        dialog.setLeftOrRight(false,"",true,"知道了")
+        dialog.setContent(true, content)
+        dialog.showDialog()
     }
 
 }
