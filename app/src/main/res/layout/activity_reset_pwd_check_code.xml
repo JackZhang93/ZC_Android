@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/tv_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dimens_30.5"
+        android:layout_marginLeft="@dimen/dimens_25"
+        android:layout_marginRight="@dimen/dimens_25"
+        android:layout_marginTop="@dimen/dimens_17"
+        android:minHeight="@dimen/dimens_49"
+        android:textColor="#000"
+        android:textSize="@dimen/dimens_18" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimens_0.5"
+        android:background="#E9E9E9" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimens_59"
+        android:layout_marginLeft="@dimen/dimens_20"
+        android:layout_marginRight="@dimen/dimens_20">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/dimens_13.5"
+            android:gravity="center"
+            android:text="验证码"
+            android:textColor="#000"
+            android:textSize="@dimen/dimens_19" />
+
+        <EditText
+            android:id="@+id/et_code"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:hint="请输入验证码"
+            android:inputType="number"
+            android:maxLength="6"
+            android:textColor="#000"
+            android:textColorHint="#B6B6B8"
+            android:textSize="@dimen/dimens_19" />
+
+        <TextView
+            android:id="@+id/tv_get_code"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="right|center_vertical"
+            android:text="重新发送(60)"
+            android:textColor="#B6B6B8"
+            android:textSize="@dimen/dimens_14" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimens_0.5"
+        android:background="#E9E9E9" />
+
+    <TextView
+        android:id="@+id/tv_get_code_wrong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginRight="@dimen/dimens_20"
+        android:layout_marginTop="@dimen/dimens_5"
+        android:text="收不到验证码?"
+        android:textColor=" #007AED"
+        android:textSize="@dimen/dimens_15" />
+
+    <TextView
+        android:id="@+id/tv_check_code_next"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimens_44"
+        android:layout_marginLeft="@dimen/dimens_20"
+        android:layout_marginRight="@dimen/dimens_20"
+        android:layout_marginTop="@dimen/dimens_44"
+        android:background="@drawable/btn_bg_unselect"
+        android:gravity="center"
+        android:text="下一步"
+        android:textColor="#fff" />
+
+</LinearLayout>
