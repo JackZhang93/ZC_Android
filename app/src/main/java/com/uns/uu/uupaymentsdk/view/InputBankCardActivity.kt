@@ -40,7 +40,7 @@ class InputBankCardActivity : BaseActivity() {
             }
 
             override fun afterTextChanged(s: Editable) {
-                if (et_input_bank_card.text.toString().trim().length > 1) {
+                if (et_input_bank_card.text.toString().trim().isNotEmpty()) {
                     canClick = true
                     tv_input_card_next.background = resources.getDrawable(R.drawable.btn_bg_selected)
                 } else {

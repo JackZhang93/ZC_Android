@@ -29,7 +29,7 @@ class InputBindCardInfoFourStepActivity : BaseActivity() {
     }
 
     override fun initData() {
-        iv_check_protocol.setOnClickListener {
+        bind_bank_card.setOnClickListener {
             isChecked = !isChecked
             if (isChecked) {
                 iv_check_protocol.setImageResource(R.mipmap.user_protocol_checked)
