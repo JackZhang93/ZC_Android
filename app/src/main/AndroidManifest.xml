@@ -24,7 +24,11 @@
         <activity android:name=".view.BindCreditBankCardActivity" />
         <!--银行卡问题界面-->
         <activity android:name=".view.BankQuestionActivity"/>
-        <activity android:name=".InputBankCardActivity"/>
+        <!--绑定银行卡界面-->
+        <activity android:name=".view.InputBankCardActivity"/>
+        <activity android:name=".view.InputBindCardInfoActivity"/>
+        <activity android:name=".view.ResetPwdCheckCodeActivity"/>
+        <activity android:name=".view.InputBindCardInfoFourStepActivity"/>
     </application>
 
 </manifest>
