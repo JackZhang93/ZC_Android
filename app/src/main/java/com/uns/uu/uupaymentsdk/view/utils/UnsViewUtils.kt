@@ -12,8 +12,10 @@ class UnsViewUtils {
         fun nextViewOk(view: View, ok: Boolean) {
             view.isEnabled = ok
             if (ok) {
+                @Suppress("DEPRECATION")
                 view.background = view.resources.getDrawable(R.drawable.btn_bg_selected)
             } else {
+                @Suppress("DEPRECATION")
                 view.background = view.resources.getDrawable(R.drawable.btn_bg_unselect)
             }
         }

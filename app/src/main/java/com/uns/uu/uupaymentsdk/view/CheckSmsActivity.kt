@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.os.Handler
+import android.text.Editable
 import android.view.Gravity
 import android.widget.Toast
 import com.uns.uu.unstoast.UnsToast
@@ -14,6 +15,8 @@ import com.uns.uu.uupaymentsdk.constant.Constant
 import com.uns.uu.uupaymentsdk.utils.HintDialogUtils
 import com.uns.uu.uupaymentsdk.utils.RefreshVerifyCode
 import com.uns.uu.uupaymentsdk.utils.ToastUtils
+import com.uns.uu.uupaymentsdk.view.utils.SimpleAfterTextWatcher
+import com.uns.uu.uupaymentsdk.view.utils.UnsViewUtils
 import com.uns.uu.uupaymentsdk.viewmodel.BindCardViewModel
 import com.uns.uu.uupaymentsdk.viewmodel.SendSmsViewModel
 import kotlinx.android.synthetic.main.activity_check_sms.*
@@ -44,12 +47,11 @@ class CheckSmsActivity : BaseActivity() {
         bind_credit_info.text = "绑定银行卡需要短信确认，验证码已发送至\n" +
                 "手机：${mPhone}，请按提示操作。"
         mDialog = HintDialogUtils(this)
-//        bind_credit_sms.inputType = InputType.TYPE_NULL
     }
 
     override fun initData() {
         handler = Handler()
-        refresh = RefreshVerifyCode(check_sms_send,handler)
+        refresh = RefreshVerifyCode(check_sms_send, handler)
         check_sms_send.setOnClickListener {
             check_sms_send.isClickable = false
             //发送短信
@@ -99,12 +101,23 @@ class CheckSmsActivity : BaseActivity() {
                 setLeftOrRight(false, "", true, "")
             }.showDialog()
         }
+        UnsViewUtils.nextViewOk(check_sms_ok, false)
+        //监听验证码
+        bind_credit_sms.addTextChangedListener(object : SimpleAfterTextWatcher() {
+            override fun afterTextChanged(s: Editable?) {
+                if (s?.length ?: 0 >= 4) {
+                    UnsViewUtils.nextViewOk(check_sms_ok, true)
+                } else {
+                    UnsViewUtils.nextViewOk(check_sms_ok, false)
+                }
+            }
+        })
 
         bind_credit_sms.setOnClickListener {
             UnsToast(applicationContext).apply {
                 setText("测试")
-                duration=Toast.LENGTH_SHORT
-                setGravity(Gravity.TOP,0,200)
+                duration = Toast.LENGTH_SHORT
+                setGravity(Gravity.TOP, 0, 200)
                 show()
             }
         }
@@ -115,9 +128,5 @@ class CheckSmsActivity : BaseActivity() {
         refresh.sure()
         refresh.setCount(60)
         handler.post(refresh)
-    }
-
-    override fun onStop() {
-        super.onStop()
     }
 }

@@ -27,7 +27,6 @@ public class UnsToast extends Toast {
     private CharSequence oldInfo = "";
     private long time = 0;
     private ObjectAnimator mAnimator;
-
     public UnsToast(Context context) {
         super(context);
         initView(context);
@@ -40,7 +39,7 @@ public class UnsToast extends Toast {
         mAnimator = ObjectAnimator.ofFloat(view, "alpha", 1.0f, 0.8f, 0.6f, 0.4f, 0.2f, 0.0f);
         mAnimator.setDuration(4000);
         mAnimator.setRepeatMode(ObjectAnimator.REVERSE);
-        mAnimator.setRepeatCount(1);
+        mAnimator.setRepeatCount(0);
     }
 
 

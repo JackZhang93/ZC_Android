@@ -43,9 +43,11 @@ class InputBindCardInfoActivity : BaseActivity() {
             override fun afterTextChanged(s: Editable) {
                 if (et_phone.text.toString().trim().length == 11) {
                     canClick = true
+                    @Suppress("DEPRECATION")
                     tv_next.background = resources.getDrawable(R.drawable.btn_bg_selected)
                 } else {
                     canClick = false
+                    @Suppress("DEPRECATION")
                     tv_next.background = resources.getDrawable(R.drawable.btn_bg_unselect)
                 }
             }

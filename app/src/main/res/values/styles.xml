@@ -20,4 +20,8 @@
         <!-- 模糊 -->
         <item name="android:backgroundDimEnabled">true</item>
     </style>
+
+    <style name="unsEditText">
+        <item name="android:textCursorDrawable">@drawable/color_cursor</item>
+    </style>
 </resources>
