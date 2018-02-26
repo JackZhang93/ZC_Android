@@ -29,6 +29,7 @@
     <dimen name="dimens_42">42dp</dimen>
     <dimen name="dimens_44">44dp</dimen>
     <dimen name="dimens_45">45dp</dimen>
+    <dimen name="dimens_45.5">45.5dp</dimen>
     <dimen name="dimens_48">48dp</dimen>
     <dimen name="dimens_54">54dp</dimen>
     <dimen name="dimens_49">49dp</dimen>
@@ -43,4 +44,5 @@
     <dimen name="dimens_7">7dp</dimen>
     <dimen name="dimens_46">46dp</dimen>
     <dimen name="dimens_12">12dp</dimen>
+    <dimen name="dimens_58">58dp</dimen>
 </resources>
