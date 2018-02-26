@@ -14,6 +14,8 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
+import com.bigkoo.pickerview.TimePickerView
+import com.bigkoo.pickerview.utils.MyDatePickReversePup
 import com.uns.uu.uupaymentsdk.R
 import com.uns.uu.uupaymentsdk.bean.BindCreditCard
 import com.uns.uu.uupaymentsdk.bean.CheckCard
@@ -26,6 +28,7 @@ import com.uns.uu.uupaymentsdk.view.utils.SimpleAfterTextWatcher
 import com.uns.uu.uupaymentsdk.view.utils.UnsViewUtils
 import com.uns.uu.uupaymentsdk.viewmodel.GetCardInfoViewModel
 import kotlinx.android.synthetic.main.activity_bindcreditbankcard.*
+import java.util.*
 
 /**
  * Created by zhaoyan on 2018/1/31.
@@ -38,11 +41,14 @@ class BindCreditBankCardActivity : BaseActivity() {
     private var hasDate: Boolean = false //有效期
     private var hasCvv2: Boolean = false //cvv2
     private var isClick: Boolean = false //是否同意条款
+    private val END_DAY = 4701859200000L
+    private lateinit var pup: MyDatePickReversePup
     override fun getLayout(): Int {
         return R.layout.activity_bindcreditbankcard
     }
 
     override fun initView() {
+        initPup()
         //设置可以点击模式
         bind_credit_accord_info.movementMethod = LinkMovementMethod.getInstance()
         val spannableString = SpannableString("同意《用户协议》。")
@@ -78,6 +84,8 @@ class BindCreditBankCardActivity : BaseActivity() {
         bind_credit_card_time_info.setOnClickListener {
             hasDate = true
             check()
+            pup.showPop(it)
+
         }
         //填写cvv2
         bind_credit_card_cvv2_info.addTextChangedListener(object : SimpleAfterTextWatcher() {
@@ -149,6 +157,16 @@ class BindCreditBankCardActivity : BaseActivity() {
         } else {
             UnsViewUtils.nextViewOk(bind_credit_ok, false)
         }
+    }
+
+    private fun initPup() {
+        pup = MyDatePickReversePup(this@BindCreditBankCardActivity, TimePickerView.Type.YEAR_MONTH, 0L, END_DAY, System.currentTimeMillis(), MyDatePickReversePup.OnSureClick {
+            val calendar = Calendar.getInstance()
+            calendar.timeInMillis = it
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH) + 1
+//            tvDate.setText(year + "年" + month + "月")
+        })
     }
 
     @SuppressLint("SetTextI18n")
