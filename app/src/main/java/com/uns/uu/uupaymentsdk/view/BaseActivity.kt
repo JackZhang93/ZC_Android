@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.view.LayoutInflater
 import com.uns.uu.uupaymentsdk.R
+import com.uns.uu.uupaymentsdk.utils.HideKey
 import kotlinx.android.synthetic.main.activity_base.*
 
 abstract class BaseActivity : AppCompatActivity() {
@@ -14,6 +15,7 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStateBarColor(R.color.colorWhite)
+        HideKey.initialize(this)
         setContentView(R.layout.activity_base)
         base_go_back.setOnClickListener {
             finish()

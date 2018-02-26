@@ -21,6 +21,7 @@ import com.uns.uu.uupaymentsdk.bean.BindCreditCard
 import com.uns.uu.uupaymentsdk.bean.CheckCard
 import com.uns.uu.uupaymentsdk.constant.CardBinConstant
 import com.uns.uu.uupaymentsdk.constant.Constant
+import com.uns.uu.uupaymentsdk.utils.HideKey
 import com.uns.uu.uupaymentsdk.utils.HintDialogUtils
 import com.uns.uu.uupaymentsdk.utils.PatterUtils
 import com.uns.uu.uupaymentsdk.utils.ToastUtils
@@ -41,7 +42,7 @@ class BindCreditBankCardActivity : BaseActivity() {
     private var hasDate: Boolean = false //有效期
     private var hasCvv2: Boolean = false //cvv2
     private var isClick: Boolean = false //是否同意条款
-    private val END_DAY = 4701859200000L
+    private val endDay = 4701859200000L
     private lateinit var pup: MyDatePickReversePup
     override fun getLayout(): Int {
         return R.layout.activity_bindcreditbankcard
@@ -82,8 +83,7 @@ class BindCreditBankCardActivity : BaseActivity() {
         }
         //选择有效期
         bind_credit_card_time_info.setOnClickListener {
-            hasDate = true
-            check()
+            HideKey.hideSoftKeyboard(this@BindCreditBankCardActivity)
             pup.showPop(it)
 
         }
@@ -93,7 +93,6 @@ class BindCreditBankCardActivity : BaseActivity() {
                 hasCvv2 = s?.length ?: 0 >= 3
                 check()
             }
-
         })
         UnsViewUtils.nextViewOk(bind_credit_ok, false)
         //下一步
@@ -159,13 +158,22 @@ class BindCreditBankCardActivity : BaseActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initPup() {
-        pup = MyDatePickReversePup(this@BindCreditBankCardActivity, TimePickerView.Type.YEAR_MONTH, 0L, END_DAY, System.currentTimeMillis(), MyDatePickReversePup.OnSureClick {
+        pup = MyDatePickReversePup(this@BindCreditBankCardActivity, TimePickerView.Type
+                .YEAR_MONTH, 0L, endDay, System.currentTimeMillis(), MyDatePickReversePup.OnSureClick {
             val calendar = Calendar.getInstance()
             calendar.timeInMillis = it
             val year = calendar.get(Calendar.YEAR)
             val month = calendar.get(Calendar.MONTH) + 1
-//            tvDate.setText(year + "年" + month + "月")
+            //月份小于两位
+            if (month < 10) {
+                bind_credit_card_time_info.text = "0$month/$year"
+            } else {
+                bind_credit_card_time_info.text = "$month/$year"
+            }
+            hasDate = true
+            check()
         })
     }
 
