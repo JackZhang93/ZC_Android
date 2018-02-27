@@ -3,10 +3,8 @@ package com.uns.uu.uupaymentsdk.view
 import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.content.Intent
-import android.text.Editable
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.TextPaint
+import android.os.Bundle
+import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.Gravity
@@ -16,6 +14,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import com.bigkoo.pickerview.TimePickerView
 import com.bigkoo.pickerview.utils.MyDatePickReversePup
+import com.uns.uu.unstoast.UnsToast
 import com.uns.uu.uupaymentsdk.R
 import com.uns.uu.uupaymentsdk.bean.BindCreditCard
 import com.uns.uu.uupaymentsdk.bean.CheckCard
@@ -44,8 +43,19 @@ class BindCreditBankCardActivity : BaseActivity() {
     private var isClick: Boolean = false //是否同意条款
     private val endDay = 4701859200000L
     private lateinit var pup: MyDatePickReversePup
+    private var cardId: String = ""
     override fun getLayout(): Int {
         return R.layout.activity_bindcreditbankcard
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        if (intent.hasExtra("cardId")) {
+            cardId = intent.getStringExtra("cardId")
+        }
+        if (TextUtils.isEmpty(cardId)) {
+            cardId = "6250861322900100"
+        }
+        super.onCreate(savedInstanceState)
     }
 
     override fun initView() {
@@ -180,18 +190,30 @@ class BindCreditBankCardActivity : BaseActivity() {
     @SuppressLint("SetTextI18n")
     override fun initData() {
         //获取信用卡信息
-        GetCardInfoViewModel().getCardInfo("6250861322900100").observe(this, Observer {
-            if (CardBinConstant.YES == it?.retCode) {
-                bind_credit_card_type_info.text = "${it.data?.issName}  ${it.data?.cardTypeName}"
-                mGetCreditBankInfo = true
-                check()
-                mData = BindCreditCard().apply {
-                    cardNo = "6250861322900100"
-                    bankCode = it.data.issuerCode
-                    cardType = "1"
+        GetCardInfoViewModel().getCardInfo(cardId).observe(this, Observer {
+            when {
+            //支持该卡片
+                CardBinConstant.YES == it?.retCode -> {
+                    bind_credit_card_type_info.text = "${it.data?.issName}  ${it.data?.cardTypeName}"
+                    mGetCreditBankInfo = true
+                    check()
+                    mData = BindCreditCard().apply {
+                        cardNo = cardId
+                        bankCode = it.data.issuerCode
+                        cardType = "1"
+                    }
                 }
-            } else {
-
+            //不支持该卡片
+                CardBinConstant.NO == it?.retCode -> {
+                    UnsToast(baseContext).apply { setText("暂不支持该卡片！") }.setGravity(Gravity.BOTTOM,
+                            0,
+                            0)
+                }
+                else -> {
+                    UnsToast(baseContext).apply { setText("网络超时，请稍后重试!") }.setGravity(Gravity.BOTTOM,
+                            0,
+                            0)
+                }
             }
         })
     }
