@@ -1,8 +1,6 @@
 package com.uns.uu.uupaymentsdk.view
 
 import android.content.Intent
-import android.text.Editable
-import android.text.TextWatcher
 import com.uns.uu.uupaymentsdk.R
 import com.uns.uu.uupaymentsdk.utils.PatterUtils
 import com.uns.uu.uupaymentsdk.utils.ToastUtils

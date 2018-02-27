@@ -1,15 +1,12 @@
 package com.uns.uu.uupaymentsdk.view
 
-import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
 import com.uns.uu.uupaymentsdk.R
-import com.uns.uu.uupaymentsdk.constant.CardBinConstant
 import com.uns.uu.uupaymentsdk.utils.HintDialogUtils
 import com.uns.uu.uupaymentsdk.utils.PatterUtils
 import com.uns.uu.uupaymentsdk.utils.ToastUtils
-import com.uns.uu.uupaymentsdk.viewmodel.GetCardInfoViewModel
 import kotlinx.android.synthetic.main.activity_input_bind_card.*
 
 /**
