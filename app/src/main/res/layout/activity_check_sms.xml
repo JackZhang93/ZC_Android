@@ -23,8 +23,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimens_1.5"
         android:minHeight="@dimen/dimens_20"
-        android:text="绑定银行卡需要短信确认，验证码已发送至
-手机：186****8369，请按提示操作。"
         android:textSize="@dimen/dimens_14"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -58,7 +56,6 @@
         android:digits="0123456789"
         android:inputType="number"
         android:singleLine="true"
-        android:text="4324"
         android:textColor="#FF000000"
         android:textSize="@dimen/dimens_19"
         app:layout_constraintLeft_toRightOf="@+id/bind_credit_sms_title"

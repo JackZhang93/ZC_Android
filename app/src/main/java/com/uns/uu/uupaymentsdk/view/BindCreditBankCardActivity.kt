@@ -108,7 +108,7 @@ class BindCreditBankCardActivity : BaseActivity() {
         //下一步
         bind_credit_ok.setOnClickListener {
             //检查卡片是否绑定
-            GetCardInfoViewModel().validCardNo(CheckCard()).observe(this, Observer {
+            GetCardInfoViewModel().validCardNo(CheckCard(cardId)).observe(this, Observer {
                 if (Constant.REQ_SUCCESS == it?.rspCode) {
                     val intent = Intent(baseContext, CheckSmsActivity::class.java)
                     intent.putExtra("phone", bind_credit_card_phone_info.text.trim().toString())

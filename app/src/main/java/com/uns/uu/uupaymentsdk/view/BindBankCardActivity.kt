@@ -3,12 +3,14 @@ package com.uns.uu.uupaymentsdk.view
 import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.content.Intent
+import android.os.Bundle
 import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
 import android.widget.Toast
 import com.uns.uu.uupaymentsdk.R
+import com.uns.uu.uupaymentsdk.bean.BindBankCard
 import com.uns.uu.uupaymentsdk.bean.BindCreditCard
 import com.uns.uu.uupaymentsdk.bean.CheckCard
 import com.uns.uu.uupaymentsdk.constant.CardBinConstant
@@ -26,14 +28,23 @@ import kotlinx.android.synthetic.main.activity_bindbankcard.*
  * 绑定银行卡界面
  */
 class BindBankCardActivity : BaseActivity() {
-    private lateinit var mData: BindCreditCard
+    private lateinit var mData: BindBankCard
     private lateinit var mDialog: HintDialogUtils
     private var isClick: Boolean = false //是否同意条款
+    private var cardId: String = ""
     override fun getLayout(): Int {
         return R.layout.activity_bindbankcard
     }
 
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        if (intent.hasExtra("cardId")) {
+            cardId = intent.getStringExtra("cardId")
+        }
+        if (TextUtils.isEmpty(cardId)) {
+            cardId = "6222620110028944586"
+        }
+        super.onCreate(savedInstanceState)
+    }
     @SuppressLint("SetTextI18n")
     override fun initView() {
         //设置可以点击模式
@@ -74,7 +85,7 @@ class BindBankCardActivity : BaseActivity() {
         //跳转到验证短信验证码界面
         bind_bank_ok.setOnClickListener {
             if (PatterUtils.Companion.matchPhone(bind_credit_card_phone_info.text.trim())) {
-                GetCardInfoViewModel().validCardNo(CheckCard()).observe(this, Observer {
+                GetCardInfoViewModel().validCardNo(CheckCard(cardId)).observe(this, Observer {
                     if (Constant.REQ_SUCCESS == it?.rspCode) {
                         val intent = Intent(baseContext, CheckSmsActivity::class.java)
                         intent.putExtra("phone", bind_credit_card_phone_info.text.trim().toString())
@@ -116,10 +127,14 @@ class BindBankCardActivity : BaseActivity() {
         }
 
 
-        GetCardInfoViewModel().getCardInfo("6222620110028944586").observe(this, Observer {
+        GetCardInfoViewModel().getCardInfo(cardId).observe(this, Observer {
             if (CardBinConstant.YES == it?.retCode) {
-
                 bind_credit_card_type_info.text = "${it.data?.issName}  ${it.data?.cardTypeName}"
+                mData = BindBankCard().apply {
+                    cardNo = cardId
+                    bankCode = it.data.issuerCode
+                    cardType = "2"
+                }
             } else {
 
             }

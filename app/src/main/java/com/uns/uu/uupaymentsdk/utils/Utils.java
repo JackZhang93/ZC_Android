@@ -174,7 +174,13 @@ public class Utils {
      * 手机号遮蔽
      */
     public static String getTel(String tel) {
-        return tel.substring(0, 3) + "*****" + tel.substring(tel.length() - 2, tel.length());
+        if (TextUtils.isEmpty(tel)) {
+            return "";
+        } else if (tel.length() >= 7) {
+            return tel.substring(0, 3) + "*****" + tel.substring(tel.length() - 4, tel.length());
+        } else {
+            return tel.substring(0, 3) + "*****";
+        }
     }
 
     /*

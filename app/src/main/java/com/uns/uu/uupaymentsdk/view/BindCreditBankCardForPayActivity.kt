@@ -3,10 +3,8 @@ package com.uns.uu.uupaymentsdk.view
 import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.content.Intent
-import android.text.Editable
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.TextPaint
+import android.os.Bundle
+import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
@@ -36,10 +34,20 @@ class BindCreditBankCardForPayActivity : BaseActivity() {
     private var hasCvv2: Boolean = false //cvv2
     private val endDay = 4701859200000L
     private lateinit var pup: MyDatePickReversePup
+    private var cardId: String = ""
     override fun getLayout(): Int {
         return R.layout.activity_bindcreditbankcardforpay
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        if (intent.hasExtra("cardId")) {
+            cardId = intent.getStringExtra("cardId")
+        }
+        if (TextUtils.isEmpty(cardId)) {
+            cardId = "6250861322900100"
+        }
+        super.onCreate(savedInstanceState)
+    }
     override fun initView() {
         initPup()
         //设置可以点击模式
@@ -89,7 +97,7 @@ class BindCreditBankCardForPayActivity : BaseActivity() {
         })
         UnsViewUtils.nextViewOk(bind_credit_ok, false)
         bind_credit_ok.setOnClickListener {
-            GetCardInfoViewModel().validCardNo(CheckCard()).observe(this, Observer {
+            GetCardInfoViewModel().validCardNo(CheckCard(cardId)).observe(this, Observer {
                 if (Constant.REQ_SUCCESS == it?.rspCode) {
                     val intent = Intent(baseContext, CheckSmsActivity::class.java)
 //                        intent.putExtra("phone", bind_credit_card_phone_info.text.trim().toString())

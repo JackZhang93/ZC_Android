@@ -7,6 +7,7 @@ import com.uns.uu.uupaymentsdk.R
 import com.uns.uu.uupaymentsdk.utils.HintDialogUtils
 import com.uns.uu.uupaymentsdk.utils.RefreshVerifyCode
 import com.uns.uu.uupaymentsdk.utils.ToastUtils
+import com.uns.uu.uupaymentsdk.utils.Utils
 import kotlinx.android.synthetic.main.activity_reset_pwd_check_code.*
 
 /**
@@ -24,7 +25,7 @@ class ResetPwdCheckCodeActivity : BaseActivity() {
 
     override fun initView() {
         handler = Handler()
-        refresh = RefreshVerifyCode(tv_get_code,handler)
+        refresh = RefreshVerifyCode(tv_get_code, handler)
         et_code.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
 
@@ -50,7 +51,8 @@ class ResetPwdCheckCodeActivity : BaseActivity() {
 
     override fun initData() {
         if (intent.hasExtra("mobile")) {
-            tv_tip.text = String.format("本次操作需要短信确认，验证码已发送至手机：%s，请按提示操作。", getHideMobile(intent.getStringExtra("mobile")))
+            tv_tip.text = String.format("本次操作需要短信确认，验证码已发送至手机：%s，请按提示操作。", Utils.getTel(intent
+                    .getStringExtra("mobile")))
         }
 
         tv_get_code.setOnClickListener {
@@ -71,9 +73,6 @@ class ResetPwdCheckCodeActivity : BaseActivity() {
 
     }
 
-    private fun getHideMobile(mobile: String): String {
-        return mobile.substring(0, 3) + "*****" + mobile.substring(8, mobile.length)
-    }
 
     //获取手机验证码
     private fun getVerifyCode() {
@@ -82,9 +81,9 @@ class ResetPwdCheckCodeActivity : BaseActivity() {
         handler.post(refresh)
     }
 
-    private fun showTip(content:String) {
+    private fun showTip(content: String) {
         val dialog = HintDialogUtils(this)
-        dialog.setLeftOrRight(false,"",true,"知道了")
+        dialog.setLeftOrRight(false, "", true, "知道了")
         dialog.setContent(true, content)
         dialog.showDialog()
     }

@@ -5,9 +5,12 @@ package com.uns.uu.uupaymentsdk.bean;
  */
 
 public class CheckCard extends BaseBaen {
-    private String cardNo = "6222620110028944586";        //银行卡id
+    private String cardNo = "";        //银行卡id
     private String accountType = "P";  //P个人，C企业，默认个人
 
+    public CheckCard(String cardNo) {
+        this.cardNo = cardNo;
+    }
 
     public String getCardNo() {
         return cardNo;
