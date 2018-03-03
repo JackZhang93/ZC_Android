@@ -8,8 +8,8 @@ import android.os.Parcel;
  */
 
 public class BindCreditCard extends BaseCardBean{
-    private String validTime; //信用卡有效期
-    private String cvv2;      //后三位
+    private String validTime;       //信用卡有效期
+    private String cvv2;            //后三位
 
     public String getValidTime() {
         return validTime;

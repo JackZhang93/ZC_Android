@@ -27,17 +27,20 @@ public class UnsToast extends Toast {
     private CharSequence oldInfo = "";
     private long time = 0;
     private ObjectAnimator mAnimator;
+    private @SuppressLint("InflateParams")
+    View view;
+
     public UnsToast(Context context) {
         super(context);
         initView(context);
     }
 
     private void initView(Context context) {
-        @SuppressLint("InflateParams") View view = LayoutInflater.from(context).inflate(R.layout.toast_uns, null);
+        view = LayoutInflater.from(context).inflate(R.layout.toast_uns, null);
         message = view.findViewById(R.id.uns_message);
         setView(view);
         mAnimator = ObjectAnimator.ofFloat(view, "alpha", 1.0f, 0.8f, 0.6f, 0.4f, 0.2f, 0.0f);
-        mAnimator.setDuration(4000);
+        mAnimator.setDuration(1500);
         mAnimator.setRepeatMode(ObjectAnimator.REVERSE);
         mAnimator.setRepeatCount(0);
     }
@@ -60,13 +63,23 @@ public class UnsToast extends Toast {
         if (oldInfo.equals(message.getText())) {
             if (System.currentTimeMillis() - time >= 4000) {
                 super.show();
-                startAnimation();
+                view.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        startAnimation();
+                    }
+                }, 2000);
                 time = System.currentTimeMillis();
                 oldInfo = message.getText();
             }
         } else {
             super.show();
-            startAnimation();
+            view.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    startAnimation();
+                }
+            }, 2000);
             time = System.currentTimeMillis();
             oldInfo = message.getText();
         }

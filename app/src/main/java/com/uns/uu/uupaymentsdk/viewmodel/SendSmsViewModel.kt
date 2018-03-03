@@ -3,6 +3,7 @@ package com.uns.uu.uupaymentsdk.viewmodel
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.support.v4.util.ArrayMap
+import android.text.TextUtils
 import com.uns.uu.uupaymentsdk.bean.PaySmsBean
 import com.uns.uu.uupaymentsdk.bean.RspInfo
 import com.uns.uu.uupaymentsdk.network.MySubscriber
@@ -24,14 +25,14 @@ class SendSmsViewModel : ViewModel() {
     fun sendSmS(merchantId: String, phoneNo: String): MutableLiveData<RspInfo> {
         val mutableLiveData = MutableLiveData<RspInfo>()
         val arrayMap = ArrayMap<String, String>()
-        arrayMap.put("merchantId", merchantId)
-        arrayMap.put("phoneNo", phoneNo)
+        arrayMap["merchantId"] = merchantId
+        arrayMap["phoneNo"] = phoneNo
         val stringBuffer = StringBuffer()
         stringBuffer.append("merchantId=").append(merchantId)
                 .append("&phoneNo=").append(phoneNo).append("&merchantKey=")
                 .append("kb201610171300#!!!")
         MyLogger.kLog().d(stringBuffer.toString())
-        arrayMap.put("mac", MD5.getMD5ofStr(stringBuffer.toString()))
+        arrayMap["mac"] = MD5.getMD5ofStr(stringBuffer.toString())
         NetWorkRequest.sendSms(arrayMap, object : MySubscriber<RspInfo?>() {
             override fun onNext(t: RspInfo?) {
                 logger.d(t.toString())
@@ -52,29 +53,30 @@ class SendSmsViewModel : ViewModel() {
 
     /**
      * 获取支付的短信验证码
-     * @param merchantId 商户id
-     * @param phoneNo  手机号码
+     * @param paySmsBean 支付
      */
     fun sendPaySmS(paySmsBean: PaySmsBean): MutableLiveData<RspInfo> {
         val mutableLiveData = MutableLiveData<RspInfo>()
         val arrayMap = ArrayMap<String, String>()
-        arrayMap.put("merchantId", paySmsBean.merchantId)
-        arrayMap.put("userId", paySmsBean.userId)
-        arrayMap.put("customerId", paySmsBean.customerId)
-        arrayMap.put("orderId", paySmsBean.orderId)
-        arrayMap.put("orderTime", paySmsBean.orderTime)
-        arrayMap.put("curType", paySmsBean.curType)
-        arrayMap.put("purpose", paySmsBean.purpose)
-        arrayMap.put("amount", paySmsBean.amount)
-        arrayMap.put("responseUrl", paySmsBean.responseUrl)
-        arrayMap.put("token", paySmsBean.token)
-        arrayMap.put("name", paySmsBean.name)
-        arrayMap.put("idNum", paySmsBean.idNum)
-        arrayMap.put("cardNo", paySmsBean.cardNo)
-        arrayMap.put("bankcardId", paySmsBean.bankcardId)
-        arrayMap.put("mobilePhoneNum", paySmsBean.mobilePhoneNum)
-        arrayMap.put("validTime", paySmsBean.validTime)
-        arrayMap.put("cvv2", paySmsBean.cvv2)
+        arrayMap["merchantId"] = paySmsBean.merchantId
+        arrayMap["userId"] = paySmsBean.userId
+        arrayMap["customerId"] = paySmsBean.customerId
+        arrayMap["orderId"] = paySmsBean.orderId
+        arrayMap["orderTime"] = paySmsBean.orderTime
+        arrayMap["curType"] = paySmsBean.curType
+        arrayMap["purpose"] = paySmsBean.purpose
+        arrayMap["amount"] = paySmsBean.amount
+        if (!TextUtils.isEmpty(paySmsBean.responseUrl)) {
+            arrayMap["responseUrl"] = paySmsBean.responseUrl
+        }
+//        arrayMap.put("token", paySmsBean.token)
+//        arrayMap.put("name", paySmsBean.name)
+//        arrayMap.put("idNum", paySmsBean.idNum)
+//        arrayMap.put("cardNo", paySmsBean.cardNo)
+        arrayMap["bankcardId"] = paySmsBean.bankcardId
+//        arrayMap.put("mobilePhoneNum", paySmsBean.mobilePhoneNum)
+        arrayMap["validTime"] = paySmsBean.validTime
+        arrayMap["cvv2"] = paySmsBean.cvv2
 //        arrayMap.put("key", paySmsBean.key)
         val stringBuffer = StringBuffer()
         stringBuffer.append("merchantId=")
@@ -108,8 +110,8 @@ class SendSmsViewModel : ViewModel() {
                 .append("&key=")
                 .append(paySmsBean.key)
         MyLogger.kLog().d(stringBuffer.toString())
-        arrayMap.put("mac", MD5.getMD5ofStr(stringBuffer.toString()))
-        NetWorkRequest.sendSms(arrayMap, object : MySubscriber<RspInfo?>() {
+        arrayMap["mac"] = MD5.getMD5ofStr(stringBuffer.toString())
+        NetWorkRequest.bindCreditCardsendSms(arrayMap, object : MySubscriber<RspInfo?>() {
             override fun onNext(t: RspInfo?) {
                 logger.d(t.toString())
                 mutableLiveData.postValue(t)

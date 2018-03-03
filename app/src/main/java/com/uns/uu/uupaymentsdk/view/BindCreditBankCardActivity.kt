@@ -16,6 +16,7 @@ import com.bigkoo.pickerview.TimePickerView
 import com.bigkoo.pickerview.utils.MyDatePickReversePup
 import com.uns.uu.unstoast.UnsToast
 import com.uns.uu.uupaymentsdk.R
+import com.uns.uu.uupaymentsdk.bean.BaseBean
 import com.uns.uu.uupaymentsdk.bean.BindCreditCard
 import com.uns.uu.uupaymentsdk.bean.CheckCard
 import com.uns.uu.uupaymentsdk.constant.CardBinConstant
@@ -38,6 +39,7 @@ class BindCreditBankCardActivity : BaseActivity() {
     private var mGetCreditBankInfo: Boolean = false //获取到信用卡信息
     private lateinit var mData: BindCreditCard
     private lateinit var mDialog: HintDialogUtils
+    private lateinit var mBaseData: BaseBean
     private var hasDate: Boolean = false //有效期
     private var hasCvv2: Boolean = false //cvv2
     private var isClick: Boolean = false //是否同意条款
@@ -51,7 +53,21 @@ class BindCreditBankCardActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         if (intent.hasExtra("cardId")) {
             cardId = intent.getStringExtra("cardId")
+        } else {
+            throw NullPointerException("cardId is NULL")
         }
+
+        if (intent.hasExtra("data")) {
+            mBaseData = intent.getParcelableExtra("data")
+            mData = BindCreditCard().apply {
+                merchantId = mBaseData.merchantId
+                customerId = mBaseData.customerId
+                merchantId = mBaseData.merchantKey
+            }
+        } else {
+            throw NullPointerException("data is NULL")
+        }
+
         if (TextUtils.isEmpty(cardId)) {
             cardId = "6250861322900100"
         }
@@ -205,14 +221,20 @@ class BindCreditBankCardActivity : BaseActivity() {
                 }
             //不支持该卡片
                 CardBinConstant.NO == it?.retCode -> {
-                    UnsToast(baseContext).apply { setText("暂不支持该卡片！") }.setGravity(Gravity.BOTTOM,
-                            0,
-                            0)
+                    UnsToast(baseContext).apply {
+                        setText("暂不支持该卡片！")
+                        setGravity(Gravity.CENTER,
+                                0,
+                                0)
+                    }.show()
                 }
                 else -> {
-                    UnsToast(baseContext).apply { setText("网络超时，请稍后重试!") }.setGravity(Gravity.BOTTOM,
-                            0,
-                            0)
+                    UnsToast(baseContext).apply {
+                        setText("网络超时，请稍后重试!")
+                        setGravity(Gravity.CENTER,
+                                0,
+                                0)
+                    }.show()
                 }
             }
         })

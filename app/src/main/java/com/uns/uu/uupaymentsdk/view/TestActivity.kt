@@ -2,6 +2,7 @@ package com.uns.uu.uupaymentsdk.view
 
 import android.content.Intent
 import com.uns.uu.uupaymentsdk.R
+import com.uns.uu.uupaymentsdk.bean.BaseBean
 import kotlinx.android.synthetic.main.activity_test.*
 
 class TestActivity : BaseActivity() {
@@ -10,13 +11,18 @@ class TestActivity : BaseActivity() {
     }
 
     override fun initView() {
-
+        val intent = Intent()
+        intent.putExtra("data", BaseBean())
         button1.setOnClickListener {
-            startActivity(Intent(baseContext, BindCreditBankCardActivity::class.java))
+            intent.putExtra("cardId", "6250861322900100")
+            intent.setClass(baseContext, BindCreditBankCardActivity::class.java)
+            startActivity(intent)
         }
 
         button2.setOnClickListener {
-            startActivity(Intent(baseContext, BindBankCardActivity::class.java))
+            intent.putExtra("cardId", "6222620110028944586")
+            intent.setClass(baseContext, BindBankCardActivity::class.java)
+            startActivity(intent)
         }
 
 
@@ -25,7 +31,9 @@ class TestActivity : BaseActivity() {
         }
 
         button4.setOnClickListener {
-            startActivity(Intent(baseContext, InputBankCardActivity::class.java))
+            intent.putExtra("name", "赵岩")
+            intent.setClass(baseContext, InputBindBankActivity::class.java)
+            startActivity(intent)
         }
     }
 

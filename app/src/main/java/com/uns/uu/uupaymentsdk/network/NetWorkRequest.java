@@ -77,6 +77,23 @@ public class NetWorkRequest {
                 .subscribe(subscriber);
     }
 
+
+    /**
+     * 绑定信用卡发短信
+     *
+     * @param map        *
+     * @param subscriber *
+     */
+    public static synchronized void bindCreditCardsendSms(Map<String, String> map,
+                                                        Subscriber<RspInfo>
+            subscriber) {
+        RxUtils.unsubscribe();
+        RxUtils.subscription = NetWork.getRegist_card_Api().bindCreditCardSendMsg(map).subscribeOn
+                (Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
     /**
      * 检查银行卡是否已经绑定
      *

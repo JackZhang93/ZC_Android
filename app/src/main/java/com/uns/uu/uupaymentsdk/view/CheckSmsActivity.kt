@@ -120,8 +120,7 @@ class CheckSmsActivity : BaseActivity() {
                 setText("测试")
                 duration = Toast.LENGTH_SHORT
                 setGravity(Gravity.TOP, 0, 200)
-                show()
-            }
+            }.show()
         }
     }
 

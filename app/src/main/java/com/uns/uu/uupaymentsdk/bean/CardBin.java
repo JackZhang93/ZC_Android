@@ -3,7 +3,7 @@ package com.uns.uu.uupaymentsdk.bean;
 /**
  * Created by peixuan.xie on 2016/8/15.
  */
-public class CardBin extends BaseBaen{
+public class CardBin extends BaseBean {
 
     private String retCode;
     private Data data;

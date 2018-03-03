@@ -1,38 +1,29 @@
 package com.uns.uu.uupaymentsdk.bean;
 
+import android.os.Parcel;
+
 /**
  * Created by zhaoyan on 2018/2/10.
+ * 信用卡支付
  */
 
-public class PaySmsBean extends BaseBaen{
-//    arrayMap.put("merchantId", merchantId)
-//            arrayMap.put("orderId", )
-//            arrayMap.put("orderTime", )
-//            arrayMap.put("curType", )
-//            arrayMap.put("userId", )
-//            arrayMap.put("customerId", )
-//            arrayMap.put("remark", )
-//            arrayMap.put("amount", )
-//            arrayMap.put("purpose", )
-//            arrayMap.put("responseUrl", )
-//            arrayMap.put("token", )
-//            arrayMap.put("bankcardId", )
+public class PaySmsBean extends BaseBean {
 
-    private String userId;
-    private String orderId;
-    private String orderTime;
-    private String curType;
-    private String purpose;
-    private String amount;
-    private String responseUrl;
+    private String userId;          // Y,       入账方用户ID
+    private String orderId;         // Y,       订单号
+    private String orderTime;       // Y,       订单时间
+    private String curType="CNY";   // Y,       金额类型（CNY）
+    private String purpose;         // Y,       目的
+    private String amount;          // Y,       金额
+    private String responseUrl;     // N,       商户响应地址
     private String token;
     private String name;
     private String idNum;
     private String cardNo;
-    private String bankcardId;
+    private String bankcardId;      //          银行卡id
     private String mobilePhoneNum;
-    private String validTime;
-    private String cvv2;
+    private String validTime;       // Y,       信用卡有效期
+    private String cvv2;            // Y,       cvv2
     private String key;
 //    private String remark;
 
@@ -164,4 +155,66 @@ public class PaySmsBean extends BaseBaen{
     public void setKey(String key) {
         this.key = key;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.userId);
+        dest.writeString(this.orderId);
+        dest.writeString(this.orderTime);
+        dest.writeString(this.curType);
+        dest.writeString(this.purpose);
+        dest.writeString(this.amount);
+        dest.writeString(this.responseUrl);
+        dest.writeString(this.token);
+        dest.writeString(this.name);
+        dest.writeString(this.idNum);
+        dest.writeString(this.cardNo);
+        dest.writeString(this.bankcardId);
+        dest.writeString(this.mobilePhoneNum);
+        dest.writeString(this.validTime);
+        dest.writeString(this.cvv2);
+        dest.writeString(this.key);
+    }
+
+    public PaySmsBean() {
+    }
+
+    protected PaySmsBean(Parcel in) {
+        super(in);
+        this.userId = in.readString();
+        this.orderId = in.readString();
+        this.orderTime = in.readString();
+        this.curType = in.readString();
+        this.purpose = in.readString();
+        this.amount = in.readString();
+        this.responseUrl = in.readString();
+        this.token = in.readString();
+        this.name = in.readString();
+        this.idNum = in.readString();
+        this.cardNo = in.readString();
+        this.bankcardId = in.readString();
+        this.mobilePhoneNum = in.readString();
+        this.validTime = in.readString();
+        this.cvv2 = in.readString();
+        this.key = in.readString();
+    }
+
+    public static final Creator<PaySmsBean> CREATOR = new Creator<PaySmsBean>() {
+        @Override
+        public PaySmsBean createFromParcel(Parcel source) {
+            return new PaySmsBean(source);
+        }
+
+        @Override
+        public PaySmsBean[] newArray(int size) {
+            return new PaySmsBean[size];
+        }
+    };
 }

@@ -66,6 +66,8 @@ public class Api {
 //
     //验证银行卡是否绑定
     public static final String VALID_CARD_NO = "wallet/validcardNo";
+    //绑定行用卡发送验证码
+    public static final String BIN_CREDIT_CARD_SEND_SMS_CODE = "wallet/getVericode";
 //
 //	//转账（bank to user）交易冻结
 //	public static final String TRAN_B2U = "walletSdk/transferFrozenByBank";

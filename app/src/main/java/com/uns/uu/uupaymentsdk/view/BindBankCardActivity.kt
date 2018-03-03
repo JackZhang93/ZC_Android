@@ -10,8 +10,8 @@ import android.text.style.ClickableSpan
 import android.view.View
 import android.widget.Toast
 import com.uns.uu.uupaymentsdk.R
+import com.uns.uu.uupaymentsdk.bean.BaseBean
 import com.uns.uu.uupaymentsdk.bean.BindBankCard
-import com.uns.uu.uupaymentsdk.bean.BindCreditCard
 import com.uns.uu.uupaymentsdk.bean.CheckCard
 import com.uns.uu.uupaymentsdk.constant.CardBinConstant
 import com.uns.uu.uupaymentsdk.constant.Constant
@@ -30,6 +30,7 @@ import kotlinx.android.synthetic.main.activity_bindbankcard.*
 class BindBankCardActivity : BaseActivity() {
     private lateinit var mData: BindBankCard
     private lateinit var mDialog: HintDialogUtils
+    private lateinit var mBaseData: BaseBean
     private var isClick: Boolean = false //是否同意条款
     private var cardId: String = ""
     override fun getLayout(): Int {
@@ -39,12 +40,25 @@ class BindBankCardActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         if (intent.hasExtra("cardId")) {
             cardId = intent.getStringExtra("cardId")
+        } else {
+            throw NullPointerException("cardId is NULL")
+        }
+        if (intent.hasExtra("data")) {
+            mBaseData = intent.getParcelableExtra("data")
+            mData = BindBankCard().apply {
+                merchantKey = mBaseData.merchantKey
+                merchantId = mBaseData.merchantId
+                customerId = mBaseData.customerId
+            }
+        } else {
+            throw NullPointerException("data is NULL")
         }
         if (TextUtils.isEmpty(cardId)) {
             cardId = "6222620110028944586"
         }
         super.onCreate(savedInstanceState)
     }
+
     @SuppressLint("SetTextI18n")
     override fun initView() {
         //设置可以点击模式
@@ -130,7 +144,7 @@ class BindBankCardActivity : BaseActivity() {
         GetCardInfoViewModel().getCardInfo(cardId).observe(this, Observer {
             if (CardBinConstant.YES == it?.retCode) {
                 bind_credit_card_type_info.text = "${it.data?.issName}  ${it.data?.cardTypeName}"
-                mData = BindBankCard().apply {
+                mData.apply {
                     cardNo = cardId
                     bankCode = it.data.issuerCode
                     cardType = "2"
