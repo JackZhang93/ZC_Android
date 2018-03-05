@@ -68,16 +68,22 @@ class SendSmsViewModel : ViewModel() {
         arrayMap["amount"] = paySmsBean.amount
         if (!TextUtils.isEmpty(paySmsBean.responseUrl)) {
             arrayMap["responseUrl"] = paySmsBean.responseUrl
+        }else{
+            arrayMap["responseUrl"]=""
         }
-//        arrayMap.put("token", paySmsBean.token)
-//        arrayMap.put("name", paySmsBean.name)
-//        arrayMap.put("idNum", paySmsBean.idNum)
-//        arrayMap.put("cardNo", paySmsBean.cardNo)
+        arrayMap["token"] = ""
+        arrayMap["name"] = ""
+        arrayMap["idNum"] = ""
+        arrayMap["cardNo"] = ""
+        arrayMap["remark"] = "remark"
         arrayMap["bankcardId"] = paySmsBean.bankcardId
-//        arrayMap.put("mobilePhoneNum", paySmsBean.mobilePhoneNum)
+        if (!TextUtils.isEmpty(paySmsBean.mobilePhoneNum)) {
+            arrayMap["mobilePhoneNum"] = paySmsBean.mobilePhoneNum
+        }else{
+            arrayMap["mobilePhoneNum"]=""
+        }
         arrayMap["validTime"] = paySmsBean.validTime
         arrayMap["cvv2"] = paySmsBean.cvv2
-//        arrayMap.put("key", paySmsBean.key)
         val stringBuffer = StringBuffer()
         stringBuffer.append("merchantId=")
                 .append(paySmsBean.merchantId)
@@ -96,20 +102,26 @@ class SendSmsViewModel : ViewModel() {
                 .append("&amount=")
                 .append(paySmsBean.amount)
                 .append("&responseUrl=")
+                .append("")
                 .append("&token=")
+                .append("")
                 .append("&name=")
+                .append("")
                 .append("&idNum=")
+                .append("")
                 .append("&cardNo=")
+                .append("")
                 .append("&bankcardId=")
                 .append(paySmsBean.bankcardId)
                 .append("&mobilePhoneNum=")
+                .append("")
                 .append("&validTime=")
                 .append(paySmsBean.validTime)
                 .append("&cvv2=")
                 .append(paySmsBean.cvv2)
                 .append("&key=")
                 .append(paySmsBean.key)
-        MyLogger.kLog().d(stringBuffer.toString())
+        MyLogger.kLog().d(String.format("mac 是  %s", stringBuffer.toString()))
         arrayMap["mac"] = MD5.getMD5ofStr(stringBuffer.toString())
         NetWorkRequest.bindCreditCardsendSms(arrayMap, object : MySubscriber<RspInfo?>() {
             override fun onNext(t: RspInfo?) {

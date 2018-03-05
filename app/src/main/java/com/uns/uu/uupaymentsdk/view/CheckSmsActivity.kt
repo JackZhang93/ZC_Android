@@ -66,6 +66,7 @@ class CheckSmsActivity : BaseActivity() {
         check_sms_ok.setOnClickListener {
             if (mType == 2) {
                 val bindCreditCard = intent.getParcelableExtra<BindCreditCard>("data")
+//                bindCreditCard.merchantId="1120140210111823001"
                 //设置验证码
                 bindCreditCard.validCode = bind_credit_sms.text.toString().trim()
                 //设置手机号

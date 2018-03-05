@@ -29,7 +29,7 @@ class BindCreditBankCardForPayActivity : BaseActivity() {
     private var hasCvv2: Boolean = false //cvv2
     private val endDay = 4701859200000L
     private lateinit var pup: MyDatePickReversePup
-    private var bankCardId: String = ""
+    private var mValidTime: String = "" //信用卡到期时间
     override fun getLayout(): Int {
         return R.layout.activity_bindcreditbankcardforpay
     }
@@ -37,9 +37,10 @@ class BindCreditBankCardForPayActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         if (intent.hasExtra("data")) {
             mData = intent.getParcelableExtra("data")
-        }
-        if (TextUtils.isEmpty(bankCardId)) {
-            bankCardId = "6250861322900100"
+            mData.amount = "0.01"
+            mData.bankcardId = "127"
+            mData.userId = mData.customerId
+            mData.purpose = "充值"
         }
         super.onCreate(savedInstanceState)
     }
@@ -87,13 +88,17 @@ class BindCreditBankCardForPayActivity : BaseActivity() {
         //cvv2
         bind_credit_card_cvv2_info.addTextChangedListener(object : SimpleAfterTextWatcher() {
             override fun afterTextChanged(s: Editable?) {
-                hasCvv2 = s?.length ?: 0 >= 4
+                hasCvv2 = s?.length ?: 0 >= 3
                 check()
             }
         })
         UnsViewUtils.nextViewOk(bind_credit_ok, false)
         bind_credit_ok.setOnClickListener {
             //发送支付验证码
+            mData.apply {
+                validTime=mValidTime
+                cvv2 = bind_credit_card_cvv2_info.text.toString().trim()
+            }
             SendSmsViewModel().sendPaySmS(mData).observe(this, android.arch.lifecycle.Observer {
 
             })
@@ -119,8 +124,10 @@ class BindCreditBankCardForPayActivity : BaseActivity() {
             val month = calendar.get(Calendar.MONTH) + 1
             //月份小于两位
             if (month < 10) {
+                mValidTime = "0$month${year % 1000}"
                 bind_credit_card_time_info.text = "0$month/$year"
             } else {
+                mValidTime = "$month${year % 1000}"
                 bind_credit_card_time_info.text = "$month/$year"
             }
             hasDate = true

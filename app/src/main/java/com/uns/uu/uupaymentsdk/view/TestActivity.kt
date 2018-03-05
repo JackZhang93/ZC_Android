@@ -1,8 +1,10 @@
 package com.uns.uu.uupaymentsdk.view
 
 import android.content.Intent
+import android.graphics.PathMeasure
 import com.uns.uu.uupaymentsdk.R
 import com.uns.uu.uupaymentsdk.bean.BaseBean
+import com.uns.uu.uupaymentsdk.bean.PaySmsBean
 import kotlinx.android.synthetic.main.activity_test.*
 
 class TestActivity : BaseActivity() {
@@ -15,6 +17,7 @@ class TestActivity : BaseActivity() {
         intent.putExtra("data", BaseBean())
         button1.setOnClickListener {
             intent.putExtra("cardId", "6250861322900100")
+//            intent.putExtra("cardId", "4062522877864595")
             intent.setClass(baseContext, BindCreditBankCardActivity::class.java)
             startActivity(intent)
         }
@@ -33,6 +36,12 @@ class TestActivity : BaseActivity() {
         button4.setOnClickListener {
             intent.putExtra("name", "赵岩")
             intent.setClass(baseContext, InputBindBankActivity::class.java)
+            startActivity(intent)
+        }
+        button5.setOnClickListener {
+            intent.putExtra("name", "赵岩")
+            intent.setClass(baseContext, BindCreditBankCardForPayActivity::class.java)
+            intent.putExtra("data", PaySmsBean())
             startActivity(intent)
         }
     }

@@ -69,9 +69,6 @@ class BindCreditBankCardActivity : BaseActivity() {
             throw NullPointerException("data is NULL")
         }
 
-        if (TextUtils.isEmpty(cardId)) {
-            cardId = "6250861322900100"
-        }
         super.onCreate(savedInstanceState)
     }
 

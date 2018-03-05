@@ -55,7 +55,7 @@ class GetCardInfoViewModel : ViewModel() {
             val mac = StringBuffer().append("merchantId=").append(bean
                     .merchantId).append("&customerId=").append(bean.customerId).append("&cardNo=")
                     .append(bean.cardNo).append("&merchantKey=").append(bean.merchantKey)
-            MyLogger.kLog().d(mac)
+            MyLogger.kLog().d(String.format("mac 是  %s", mac))
             arrayMap["mac"] = MD5.getMD5ofStr(mac.toString())
             NetWorkRequest.validCardNo(arrayMap, object : MySubscriber<RspInfo?>() {
                 override fun onNext(t: RspInfo?) {
