@@ -147,7 +147,7 @@ class BindBankCardActivity : BaseActivity() {
                 mData.apply {
                     cardNo = cardId
                     bankCode = it.data.issuerCode
-                    cardType = "2"
+                    cardType = "1"
                 }
             } else {
 

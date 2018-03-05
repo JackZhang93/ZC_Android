@@ -4,15 +4,14 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <application
-        android:theme="@style/AppTheme"
         >
-        <activity android:name=".view.TestActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <!--<activity android:name=".view.TestActivity">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
         <!--绑定银行卡界面-->
         <activity android:name=".view.BindBankCardActivity" />
         <!--输入手机验证码界面-->

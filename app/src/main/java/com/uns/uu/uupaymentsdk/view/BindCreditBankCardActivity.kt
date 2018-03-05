@@ -46,6 +46,7 @@ class BindCreditBankCardActivity : BaseActivity() {
     private val endDay = 4701859200000L
     private lateinit var pup: MyDatePickReversePup
     private var cardId: String = ""
+    private var mValidTime: String = "" //信用卡到期时间
     override fun getLayout(): Int {
         return R.layout.activity_bindcreditbankcard
     }
@@ -130,7 +131,7 @@ class BindCreditBankCardActivity : BaseActivity() {
                     intent.putExtra("phone", bind_credit_card_phone_info.text.trim().toString())
                     intent.putExtra("type", 2)
                     mData.apply {
-                        validTime = bind_credit_card_time_info.text.toString().trim()
+                        validTime = mValidTime
                         cvv2 = bind_credit_card_cvv2_info.text.toString().trim()
                     }
                     intent.putExtra("data", mData)
@@ -194,8 +195,10 @@ class BindCreditBankCardActivity : BaseActivity() {
             val month = calendar.get(Calendar.MONTH) + 1
             //月份小于两位
             if (month < 10) {
+                mValidTime = "0$month${year % 1000}"
                 bind_credit_card_time_info.text = "0$month/$year"
             } else {
+                mValidTime = "$month${year % 1000}"
                 bind_credit_card_time_info.text = "$month/$year"
             }
             hasDate = true
@@ -216,7 +219,7 @@ class BindCreditBankCardActivity : BaseActivity() {
                     mData = BindCreditCard().apply {
                         cardNo = cardId
                         bankCode = it.data.issuerCode
-                        cardType = "1"
+                        cardType = "2"
                     }
                 }
             //不支持该卡片
