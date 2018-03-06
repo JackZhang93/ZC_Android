@@ -37,9 +37,11 @@ class ResetPwdCheckCodeActivity : BaseActivity() {
             override fun afterTextChanged(s: Editable) {
                 if (et_code.text.toString().trim().length == 6) {
                     canClick = true
+                    @Suppress("DEPRECATION")
                     tv_check_code_next.background = resources.getDrawable(R.drawable.btn_bg_selected)
                 } else {
                     canClick = false
+                    @Suppress("DEPRECATION")
                     tv_check_code_next.background = resources.getDrawable(R.drawable.btn_bg_unselect)
                 }
             }

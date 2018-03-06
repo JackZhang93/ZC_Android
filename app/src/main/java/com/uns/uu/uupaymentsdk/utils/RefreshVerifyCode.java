@@ -9,7 +9,7 @@ import android.widget.TextView;
  * des：
  */
 
-public class RefreshVerifyCode implements Runnable{
+public class RefreshVerifyCode implements Runnable {
     public static final int TIME = 1000;
     private TextView btn;
     private Handler handler;
@@ -33,8 +33,10 @@ public class RefreshVerifyCode implements Runnable{
             return;
         }
         if (count-- > 0) {
-            btn.setText(String.format("重新发送(%d)",count));
-            btn.setEnabled(false);
+            btn.setText(String.format("重新发送(%d)", count));
+            if (btn.isEnabled()) {
+                btn.setEnabled(false);
+            }
             handler.postDelayed(this, TIME);
         } else {
             btn.setText("重新获取");
@@ -45,7 +47,8 @@ public class RefreshVerifyCode implements Runnable{
     public void cancel() {
         isRunning = false;
     }
-    public void sure(){
+
+    public void sure() {
         isRunning = true;
     }
 }

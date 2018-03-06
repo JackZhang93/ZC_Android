@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,14 +9,32 @@
     tools:context="com.uns.uu.uupaymentsdk.view.BaseActivity">
 
     <android.support.constraint.ConstraintLayout
-        android:background="@color/colorPrimary"
         android:id="@+id/wallet_title_bar"
         android:layout_width="match_parent"
-        android:layout_height="44dp">
+        android:layout_height="@dimen/dimens_44">
 
         <ImageView
-            android:layout_width="@dimen/dimens_20"
-            android:layout_height="@dimen/dimens_20" />
+            android:id="@+id/base_go_back"
+            android:layout_width="@dimen/dimens_44"
+            android:layout_height="0dp"
+            android:paddingBottom="@dimen/dimens_12"
+            android:paddingLeft="@dimen/dimens_20"
+            android:paddingRight="@dimen/dimens_12"
+            android:paddingTop="@dimen/dimens_12"
+            android:src="@mipmap/titlebar_ic_goback"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/base_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@android:color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
 
     <FrameLayout

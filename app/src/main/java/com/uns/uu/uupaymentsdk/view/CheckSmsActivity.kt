@@ -3,6 +3,8 @@ package com.uns.uu.uupaymentsdk.view
 import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.os.Bundle
+import android.os.Handler
+import android.text.Editable
 import android.view.Gravity
 import android.widget.Toast
 import com.uns.uu.unstoast.UnsToast
@@ -11,7 +13,10 @@ import com.uns.uu.uupaymentsdk.bean.BindBankCard
 import com.uns.uu.uupaymentsdk.bean.BindCreditCard
 import com.uns.uu.uupaymentsdk.constant.Constant
 import com.uns.uu.uupaymentsdk.utils.HintDialogUtils
+import com.uns.uu.uupaymentsdk.utils.RefreshVerifyCode
 import com.uns.uu.uupaymentsdk.utils.ToastUtils
+import com.uns.uu.uupaymentsdk.view.utils.SimpleAfterTextWatcher
+import com.uns.uu.uupaymentsdk.view.utils.UnsViewUtils
 import com.uns.uu.uupaymentsdk.viewmodel.BindCardViewModel
 import com.uns.uu.uupaymentsdk.viewmodel.SendSmsViewModel
 import kotlinx.android.synthetic.main.activity_check_sms.*
@@ -24,6 +29,8 @@ class CheckSmsActivity : BaseActivity() {
     private lateinit var mPhone: String             //手机号码
     private lateinit var mDialog: HintDialogUtils   //提示框
     private var mType = -1                          //类型
+    private lateinit var refresh: RefreshVerifyCode
+    private lateinit var handler: Handler
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mType = intent.getIntExtra("type", -1)
@@ -40,17 +47,20 @@ class CheckSmsActivity : BaseActivity() {
         bind_credit_info.text = "绑定银行卡需要短信确认，验证码已发送至\n" +
                 "手机：${mPhone}，请按提示操作。"
         mDialog = HintDialogUtils(this)
-//        bind_credit_sms.inputType = InputType.TYPE_NULL
     }
 
     override fun initData() {
+        handler = Handler()
+        refresh = RefreshVerifyCode(check_sms_send, handler)
         check_sms_send.setOnClickListener {
             check_sms_send.isClickable = false
             //发送短信
+            getVerifyCode()
             SendSmsViewModel().sendSmS("1120140210111823001", mPhone).observe(this, Observer {
 
             })
         }
+        getVerifyCode()
         check_sms_ok.setOnClickListener {
             if (mType == 2) {
                 val bindCreditCard = intent.getParcelableExtra<BindCreditCard>("data")
@@ -91,19 +101,32 @@ class CheckSmsActivity : BaseActivity() {
                 setLeftOrRight(false, "", true, "")
             }.showDialog()
         }
+        UnsViewUtils.nextViewOk(check_sms_ok, false)
+        //监听验证码
+        bind_credit_sms.addTextChangedListener(object : SimpleAfterTextWatcher() {
+            override fun afterTextChanged(s: Editable?) {
+                if (s?.length ?: 0 >= 4) {
+                    UnsViewUtils.nextViewOk(check_sms_ok, true)
+                } else {
+                    UnsViewUtils.nextViewOk(check_sms_ok, false)
+                }
+            }
+        })
 
         bind_credit_sms.setOnClickListener {
             UnsToast(applicationContext).apply {
                 setText("测试")
-                duration=Toast.LENGTH_SHORT
-                setGravity(Gravity.TOP,0,200)
+                duration = Toast.LENGTH_SHORT
+                setGravity(Gravity.TOP, 0, 200)
                 show()
             }
         }
     }
 
-    override fun onStop() {
-//        UnsKeyBoardUtils.shared(this@CheckSmsActivity, bind_credit_sms)?.hideKeyboard()
-        super.onStop()
+    //获取手机验证码
+    private fun getVerifyCode() {
+        refresh.sure()
+        refresh.setCount(60)
+        handler.post(refresh)
     }
 }

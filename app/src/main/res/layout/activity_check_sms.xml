@@ -21,7 +21,7 @@
         android:id="@+id/bind_credit_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1.5dp"
+        android:layout_marginTop="@dimen/dimens_1.5"
         android:minHeight="@dimen/dimens_20"
         android:text="绑定银行卡需要短信确认，验证码已发送至
 手机：186****8369，请按提示操作。"
@@ -33,40 +33,45 @@
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/line1"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_marginTop="45.5dp"
+        android:layout_height="@dimen/dimens_0.5"
+        android:layout_marginTop="@dimen/dimens_45.5"
         android:background="#FFE9E9E9"
         app:layout_constraintTop_toBottomOf="@+id/bind_credit_info" />
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/bind_credit_sms_title"
-        android:layout_width="58dp"
-        android:layout_height="60dp"
+        android:layout_width="@dimen/dimens_58"
+        android:layout_height="@dimen/dimens_60"
         android:gravity="center_vertical"
         android:text="验证码"
         android:textColor="#FF000000"
-        android:textSize="19sp"
+        android:textSize="@dimen/dimens_19"
         app:layout_constraintTop_toBottomOf="@+id/line1" />
 
     <android.support.v7.widget.AppCompatEditText
         android:id="@+id/bind_credit_sms"
+        style="@style/unsEditText"
         android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_height="@dimen/dimens_60"
+        android:layout_marginRight="@dimen/dimens_12"
+        android:background="@null"
+        android:digits="0123456789"
         android:inputType="number"
         android:singleLine="true"
         android:text="4324"
         android:textColor="#FF000000"
-        android:textSize="19sp"
+        android:textSize="@dimen/dimens_19"
         app:layout_constraintLeft_toRightOf="@+id/bind_credit_sms_title"
+        app:layout_constraintRight_toLeftOf="@+id/check_sms_send"
         app:layout_constraintTop_toBottomOf="@+id/line1" />
 
     <TextView
         android:id="@+id/check_sms_send"
         android:layout_width="102.5dp"
-        android:layout_height="18dp"
+        android:layout_height="@dimen/dimens_18"
         android:text="重新发送（60）"
         android:textColor="#FF000000"
-        android:textSize="14sp"
+        android:textSize="@dimen/dimens_14"
         app:layout_constraintBottom_toBottomOf="@+id/line2"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/line1" />
@@ -74,25 +79,31 @@
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/line2"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
+        android:layout_height="@dimen/dimens_0.5"
         android:background="#FFE9E9E9"
         app:layout_constraintTop_toBottomOf="@+id/bind_credit_sms" />
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/bind_credit_sms_qua"
-        android:layout_width="106.5dp"
-        android:layout_height="22.5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/dimens_22"
         android:text="收不到验证码？"
         android:textColor="#FF007AED"
-        android:textSize="15sp"
+        android:textSize="@dimen/dimens_15"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/line2" />
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/check_sms_ok"
-        android:layout_width="335dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="44dp"
-        android:background="#FF007AED"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dimens_44"
+        android:layout_marginTop="@dimen/dimens_44"
+        android:background="@drawable/shape_default_board"
+        android:gravity="center"
+        android:text="下一步"
+        android:textColor="@android:color/white"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bind_credit_sms_qua" />
 </android.support.constraint.ConstraintLayout>

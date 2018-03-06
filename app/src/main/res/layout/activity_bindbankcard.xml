@@ -23,7 +23,7 @@
         android:id="@+id/bind_credit_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1.5dp"
+        android:layout_marginTop="@dimen/dimens_1.5"
         android:minHeight="@dimen/dimens_20"
         android:text="@string/input_phone"
         android:textColor="@android:color/black"
@@ -35,8 +35,8 @@
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/line1"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_marginTop="45dp"
+        android:layout_height="@dimen/dimens_0.5"
+        android:layout_marginTop="@dimen/dimens_45"
         android:background="#FFE9E9E9"
         app:layout_constraintTop_toBottomOf="@+id/bind_credit_info" />
 
@@ -55,7 +55,7 @@
         android:id="@+id/bind_credit_card_type_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="7dp"
+        android:layout_marginLeft="@dimen/dimens_7"
         android:gravity="center_vertical"
         android:minHeight="@dimen/dimens_60"
         android:text="卡类型"
@@ -68,7 +68,7 @@
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/line2"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
+        android:layout_height="@dimen/dimens_0.5"
         android:background="#FFE9E9E9"
         app:layout_constraintTop_toBottomOf="@+id/bind_credit_card_type_info" />
 
@@ -84,17 +84,19 @@
         app:layout_constraintTop_toBottomOf="@+id/line2" />
 
     <android.support.v7.widget.AppCompatEditText
+        style="@style/unsEditText"
         android:id="@+id/bind_credit_card_phone_info"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="7dp"
+        android:layout_marginLeft="@dimen/dimens_7"
         android:background="@null"
         android:gravity="center_vertical"
         android:hint="请输入银行预留手机号"
         android:inputType="phone"
+        android:digits="0123456789"
+        android:maxLength="11"
         android:minHeight="@dimen/dimens_60"
         android:textSize="@dimen/dimens_19"
-        android:maxLength="11"
         app:layout_constraintLeft_toRightOf="@+id/bind_credit_card_phone_title"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/bind_credit_card_phone_title"
@@ -103,7 +105,7 @@
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/line5"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
+        android:layout_height="@dimen/dimens_0.5"
         android:background="#FFE9E9E9"
         app:layout_constraintTop_toBottomOf="@+id/bind_credit_card_phone_info" />
 
@@ -111,38 +113,42 @@
         android:id="@+id/bind_bank_accord"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="13.5dp"
-        android:minHeight="22dp"
+        android:layout_marginTop="@dimen/dimens_13.5"
+        android:minHeight="@dimen/dimens_22"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/bind_credit_card_phone_info">
 
         <ImageView
-            android:layout_width="11dp"
-            android:layout_height="11dp"
-            android:layout_gravity="center_vertical" />
+            android:id="@+id/bind_bank_icon"
+            android:layout_width="@dimen/dimens_11"
+            android:layout_height="@dimen/dimens_11"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/user_protocol_uncheck" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/bind_bank_accord_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginStart="5dp" />
+            android:layout_marginLeft="@dimen/dimens_5"
+            android:layout_marginStart="@dimen/dimens_5" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/bind_bank_ok"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:background="#FF007AED"
-        android:minHeight="44dp"
+        android:layout_marginTop="@dimen/dimens_44"
+        android:gravity="center"
+        android:minHeight="@dimen/dimens_44"
+        android:text="下一步"
+        android:textColor="@android:color/white"
         app:layout_constraintTop_toBottomOf="@+id/bind_bank_accord" />
 
     <LinearLayout
         android:id="@+id/bind_bank_phone_hint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="56.5dp"
+        android:layout_marginBottom="@dimen/dimens_56.5"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -151,14 +157,14 @@
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minHeight="21dp"
+            android:minHeight="@dimen/dimens_21"
             android:text="预留手机号说明" />
 
         <android.support.v7.widget.AppCompatImageView
-            android:layout_width="16dp"
-            android:layout_height="16dp"
+            android:layout_width="@dimen/dimens_16"
+            android:layout_height="@dimen/dimens_16"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="3.5dp"
-            android:layout_marginStart="3.5dp" />
+            android:layout_marginLeft="@dimen/dimens_3.5"
+            android:layout_marginStart="@dimen/dimens_3.5" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
