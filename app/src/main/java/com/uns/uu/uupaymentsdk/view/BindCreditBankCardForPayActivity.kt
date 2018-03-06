@@ -1,12 +1,8 @@
 package com.uns.uu.uupaymentsdk.view
 
 import android.annotation.SuppressLint
-import android.arch.lifecycle.Observer
-import android.content.Intent
-import android.text.Editable
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.TextPaint
+import android.os.Bundle
+import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
@@ -14,14 +10,11 @@ import android.widget.Toast
 import com.bigkoo.pickerview.TimePickerView
 import com.bigkoo.pickerview.utils.MyDatePickReversePup
 import com.uns.uu.uupaymentsdk.R
-import com.uns.uu.uupaymentsdk.bean.BindCreditCard
-import com.uns.uu.uupaymentsdk.bean.CheckCard
-import com.uns.uu.uupaymentsdk.constant.Constant
+import com.uns.uu.uupaymentsdk.bean.PaySmsBean
 import com.uns.uu.uupaymentsdk.utils.HideKey
-import com.uns.uu.uupaymentsdk.utils.ToastUtils
 import com.uns.uu.uupaymentsdk.view.utils.SimpleAfterTextWatcher
 import com.uns.uu.uupaymentsdk.view.utils.UnsViewUtils
-import com.uns.uu.uupaymentsdk.viewmodel.GetCardInfoViewModel
+import com.uns.uu.uupaymentsdk.viewmodel.SendSmsViewModel
 import kotlinx.android.synthetic.main.activity_bindcreditbankcardforpay.*
 import java.util.*
 
@@ -30,14 +23,26 @@ import java.util.*
  * 绑定信用卡
  */
 class BindCreditBankCardForPayActivity : BaseActivity() {
-    private lateinit var mData: BindCreditCard
+    private lateinit var mData: PaySmsBean
     private var isClick: Boolean = false //是否同意条款
     private var hasDate: Boolean = false //有效期
     private var hasCvv2: Boolean = false //cvv2
     private val endDay = 4701859200000L
     private lateinit var pup: MyDatePickReversePup
+    private var mValidTime: String = "" //信用卡到期时间
     override fun getLayout(): Int {
         return R.layout.activity_bindcreditbankcardforpay
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        if (intent.hasExtra("data")) {
+            mData = intent.getParcelableExtra("data")
+            mData.amount = "0.01"
+            mData.bankcardId = "127"
+            mData.userId = mData.customerId
+            mData.purpose = "充值"
+        }
+        super.onCreate(savedInstanceState)
     }
 
     override fun initView() {
@@ -83,28 +88,21 @@ class BindCreditBankCardForPayActivity : BaseActivity() {
         //cvv2
         bind_credit_card_cvv2_info.addTextChangedListener(object : SimpleAfterTextWatcher() {
             override fun afterTextChanged(s: Editable?) {
-                hasCvv2 = s?.length ?: 0 >= 4
+                hasCvv2 = s?.length ?: 0 >= 3
                 check()
             }
         })
         UnsViewUtils.nextViewOk(bind_credit_ok, false)
         bind_credit_ok.setOnClickListener {
-            GetCardInfoViewModel().validCardNo(CheckCard()).observe(this, Observer {
-                if (Constant.REQ_SUCCESS == it?.rspCode) {
-                    val intent = Intent(baseContext, CheckSmsActivity::class.java)
-//                        intent.putExtra("phone", bind_credit_card_phone_info.text.trim().toString())
-                    intent.putExtra("type", 2)
-                    mData.apply {
-                        validTime = bind_credit_card_time_info.text.toString().trim()
-                        cvv2 = bind_credit_card_cvv2_info.text.toString().trim()
-                    }
-                    intent.putExtra("data", mData)
-                    startActivity(intent)
-                } else {
-                    ToastUtils.showToast(this@BindCreditBankCardForPayActivity, it?.rspMsg)
-                }
+            //发送支付验证码
+            mData.apply {
+                validTime=mValidTime
+                cvv2 = bind_credit_card_cvv2_info.text.toString().trim()
+            }
+            SendSmsViewModel().sendPaySmS(mData).observe(this, android.arch.lifecycle.Observer {
 
             })
+
         }
     }
 
@@ -126,8 +124,10 @@ class BindCreditBankCardForPayActivity : BaseActivity() {
             val month = calendar.get(Calendar.MONTH) + 1
             //月份小于两位
             if (month < 10) {
+                mValidTime = "0$month${year % 1000}"
                 bind_credit_card_time_info.text = "0$month/$year"
             } else {
+                mValidTime = "$month${year % 1000}"
                 bind_credit_card_time_info.text = "$month/$year"
             }
             hasDate = true

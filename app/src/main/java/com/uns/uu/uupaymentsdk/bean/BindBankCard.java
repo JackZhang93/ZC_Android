@@ -8,8 +8,8 @@ import android.os.Parcel;
  */
 
 public class BindBankCard extends BaseCardBean{
-    private String accountType="P"; //账户类型,P个人C企业，默认个人。
-    private String idCode;  //身份证号,企业绑定银行卡时传入
+    private String accountType="P";     //账户类型,P个人C企业，默认个人。
+    private String idCode;              //身份证号,企业绑定银行卡时传入
 
     public String getAccountType() {
         return accountType;

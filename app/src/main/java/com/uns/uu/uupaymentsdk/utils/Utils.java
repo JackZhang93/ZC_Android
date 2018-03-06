@@ -174,7 +174,31 @@ public class Utils {
      * 手机号遮蔽
      */
     public static String getTel(String tel) {
-        return tel.substring(0, 3) + "*****" + tel.substring(tel.length() - 2, tel.length());
+        if (TextUtils.isEmpty(tel)) {
+            return "";
+        } else if (tel.length() >= 7) {
+            return tel.substring(0, 3) + "*****" + tel.substring(tel.length() - 4, tel.length());
+        } else {
+            return tel.substring(0, 3) + "*****";
+        }
+    }
+
+    /*
+     *姓名遮盖
+     */
+    public static String getName(String name) {
+        if (TextUtils.isEmpty(name)) {
+            return "";
+        } else {
+            int length = name.length();
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < length - 1; i++) {
+                builder.append("*");
+            }
+            String substring = name.substring(length - 1, length);
+            builder.append(substring);
+            return builder.toString();
+        }
     }
 
     /*

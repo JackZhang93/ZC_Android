@@ -7,13 +7,13 @@ import android.os.Parcel;
  * 绑卡基本信息
  */
 
-public class BaseCardBean extends BaseBaen{
-    private String cardNo; //卡号
-    private String cardType; //卡类型 1表示借记卡，2表示信用卡
-    private String bankCode; //银行代码
-    private String phoneNo; //手机号码
-    private String validCode; //验证码
-    private String mac; //报文鉴别码
+public class BaseCardBean extends BaseBean {
+    private String cardNo;                  //卡号
+    private String cardType;                //卡类型 1表示借记卡，2表示信用卡
+    private String bankCode;                //银行代码
+    private String phoneNo;                 //手机号码
+    private String validCode;               //验证码
+    private String mac;                     //报文鉴别码
 
     public String getCardNo() {
         return cardNo;

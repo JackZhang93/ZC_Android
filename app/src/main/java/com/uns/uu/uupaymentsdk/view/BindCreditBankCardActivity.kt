@@ -3,10 +3,8 @@ package com.uns.uu.uupaymentsdk.view
 import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.content.Intent
-import android.text.Editable
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.TextPaint
+import android.os.Bundle
+import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.Gravity
@@ -16,7 +14,9 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import com.bigkoo.pickerview.TimePickerView
 import com.bigkoo.pickerview.utils.MyDatePickReversePup
+import com.uns.uu.unstoast.UnsToast
 import com.uns.uu.uupaymentsdk.R
+import com.uns.uu.uupaymentsdk.bean.BaseBean
 import com.uns.uu.uupaymentsdk.bean.BindCreditCard
 import com.uns.uu.uupaymentsdk.bean.CheckCard
 import com.uns.uu.uupaymentsdk.constant.CardBinConstant
@@ -39,13 +39,37 @@ class BindCreditBankCardActivity : BaseActivity() {
     private var mGetCreditBankInfo: Boolean = false //获取到信用卡信息
     private lateinit var mData: BindCreditCard
     private lateinit var mDialog: HintDialogUtils
+    private lateinit var mBaseData: BaseBean
     private var hasDate: Boolean = false //有效期
     private var hasCvv2: Boolean = false //cvv2
     private var isClick: Boolean = false //是否同意条款
     private val endDay = 4701859200000L
     private lateinit var pup: MyDatePickReversePup
+    private var cardId: String = ""
+    private var mValidTime: String = "" //信用卡到期时间
     override fun getLayout(): Int {
         return R.layout.activity_bindcreditbankcard
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        if (intent.hasExtra("cardId")) {
+            cardId = intent.getStringExtra("cardId")
+        } else {
+            throw NullPointerException("cardId is NULL")
+        }
+
+        if (intent.hasExtra("data")) {
+            mBaseData = intent.getParcelableExtra("data")
+            mData = BindCreditCard().apply {
+                merchantId = mBaseData.merchantId
+                customerId = mBaseData.customerId
+                merchantId = mBaseData.merchantKey
+            }
+        } else {
+            throw NullPointerException("data is NULL")
+        }
+
+        super.onCreate(savedInstanceState)
     }
 
     override fun initView() {
@@ -98,13 +122,13 @@ class BindCreditBankCardActivity : BaseActivity() {
         //下一步
         bind_credit_ok.setOnClickListener {
             //检查卡片是否绑定
-            GetCardInfoViewModel().validCardNo(CheckCard()).observe(this, Observer {
+            GetCardInfoViewModel().validCardNo(CheckCard(cardId)).observe(this, Observer {
                 if (Constant.REQ_SUCCESS == it?.rspCode) {
                     val intent = Intent(baseContext, CheckSmsActivity::class.java)
                     intent.putExtra("phone", bind_credit_card_phone_info.text.trim().toString())
                     intent.putExtra("type", 2)
                     mData.apply {
-                        validTime = bind_credit_card_time_info.text.toString().trim()
+                        validTime = mValidTime
                         cvv2 = bind_credit_card_cvv2_info.text.toString().trim()
                     }
                     intent.putExtra("data", mData)
@@ -168,8 +192,10 @@ class BindCreditBankCardActivity : BaseActivity() {
             val month = calendar.get(Calendar.MONTH) + 1
             //月份小于两位
             if (month < 10) {
+                mValidTime = "0$month${year % 1000}"
                 bind_credit_card_time_info.text = "0$month/$year"
             } else {
+                mValidTime = "$month${year % 1000}"
                 bind_credit_card_time_info.text = "$month/$year"
             }
             hasDate = true
@@ -180,18 +206,36 @@ class BindCreditBankCardActivity : BaseActivity() {
     @SuppressLint("SetTextI18n")
     override fun initData() {
         //获取信用卡信息
-        GetCardInfoViewModel().getCardInfo("6250861322900100").observe(this, Observer {
-            if (CardBinConstant.YES == it?.retCode) {
-                bind_credit_card_type_info.text = "${it.data?.issName}  ${it.data?.cardTypeName}"
-                mGetCreditBankInfo = true
-                check()
-                mData = BindCreditCard().apply {
-                    cardNo = "6250861322900100"
-                    bankCode = it.data.issuerCode
-                    cardType = "1"
+        GetCardInfoViewModel().getCardInfo(cardId).observe(this, Observer {
+            when {
+            //支持该卡片
+                CardBinConstant.YES == it?.retCode -> {
+                    bind_credit_card_type_info.text = "${it.data?.issName}  ${it.data?.cardTypeName}"
+                    mGetCreditBankInfo = true
+                    check()
+                    mData = BindCreditCard().apply {
+                        cardNo = cardId
+                        bankCode = it.data.issuerCode
+                        cardType = "2"
+                    }
                 }
-            } else {
-
+            //不支持该卡片
+                CardBinConstant.NO == it?.retCode -> {
+                    UnsToast(baseContext).apply {
+                        setText("暂不支持该卡片！")
+                        setGravity(Gravity.CENTER,
+                                0,
+                                0)
+                    }.show()
+                }
+                else -> {
+                    UnsToast(baseContext).apply {
+                        setText("网络超时，请稍后重试!")
+                        setGravity(Gravity.CENTER,
+                                0,
+                                0)
+                    }.show()
+                }
             }
         })
     }

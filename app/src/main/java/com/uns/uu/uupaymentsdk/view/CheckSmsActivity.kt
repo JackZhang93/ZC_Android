@@ -15,6 +15,7 @@ import com.uns.uu.uupaymentsdk.constant.Constant
 import com.uns.uu.uupaymentsdk.utils.HintDialogUtils
 import com.uns.uu.uupaymentsdk.utils.RefreshVerifyCode
 import com.uns.uu.uupaymentsdk.utils.ToastUtils
+import com.uns.uu.uupaymentsdk.utils.Utils
 import com.uns.uu.uupaymentsdk.view.utils.SimpleAfterTextWatcher
 import com.uns.uu.uupaymentsdk.view.utils.UnsViewUtils
 import com.uns.uu.uupaymentsdk.viewmodel.BindCardViewModel
@@ -31,9 +32,10 @@ class CheckSmsActivity : BaseActivity() {
     private var mType = -1                          //类型
     private lateinit var refresh: RefreshVerifyCode
     private lateinit var handler: Handler
+    private var cardId: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         mType = intent.getIntExtra("type", -1)
+        super.onCreate(savedInstanceState)
     }
 
     override fun getLayout(): Int {
@@ -45,7 +47,7 @@ class CheckSmsActivity : BaseActivity() {
         mPhone = intent.getStringExtra("phone") ?: ""
         @Suppress("RemoveCurlyBracesFromTemplate")
         bind_credit_info.text = "绑定银行卡需要短信确认，验证码已发送至\n" +
-                "手机：${mPhone}，请按提示操作。"
+                "手机：${Utils.getTel(mPhone)}，请按提示操作。"
         mDialog = HintDialogUtils(this)
     }
 
@@ -64,6 +66,7 @@ class CheckSmsActivity : BaseActivity() {
         check_sms_ok.setOnClickListener {
             if (mType == 2) {
                 val bindCreditCard = intent.getParcelableExtra<BindCreditCard>("data")
+//                bindCreditCard.merchantId="1120140210111823001"
                 //设置验证码
                 bindCreditCard.validCode = bind_credit_sms.text.toString().trim()
                 //设置手机号
@@ -118,8 +121,7 @@ class CheckSmsActivity : BaseActivity() {
                 setText("测试")
                 duration = Toast.LENGTH_SHORT
                 setGravity(Gravity.TOP, 0, 200)
-                show()
-            }
+            }.show()
         }
     }
 

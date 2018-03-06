@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/dimens_11"
+    android:paddingLeft="@dimen/dimens_20"
+    android:paddingRight="@dimen/dimens_20">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/input_bank_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/dimens_42"
+        android:text="@string/add_bank_card"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/dimens_30"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/input_bank_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimens_1.5"
+        android:minHeight="@dimen/dimens_20"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/dimens_14"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_bank_title" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimens_0.5"
+        android:layout_marginTop="@dimen/dimens_45"
+        android:background="#FFE9E9E9"
+        app:layout_constraintTop_toBottomOf="@+id/input_bank_info" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/input_bank_card_name_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/dimens_60"
+        android:text="姓名"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/dimens_19"
+        app:layout_constraintTop_toBottomOf="@+id/line1" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/input_bank_card_name_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimens_7"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/dimens_60"
+        android:textSize="@dimen/dimens_17"
+        app:layout_constraintLeft_toRightOf="@+id/input_bank_card_name_title"
+        app:layout_constraintTop_toTopOf="@+id/input_bank_card_name_title"
+        tools:ignore="RtlHardcoded" />
+
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/line2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimens_0.5"
+        android:background="#FFE9E9E9"
+        app:layout_constraintTop_toBottomOf="@+id/input_bank_card_name_info" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/input_bank_card_info_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/dimens_60"
+        android:text="卡号"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/dimens_17"
+        app:layout_constraintTop_toBottomOf="@+id/line2" />
+
+    <android.support.v7.widget.AppCompatEditText
+        style="@style/unsEditText"
+        android:id="@+id/input_bank_card_info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimens_7"
+        android:background="@null"
+        android:gravity="center_vertical"
+        android:inputType="number"
+        android:digits="0123456789"
+        android:maxLength="16"
+        android:minHeight="@dimen/dimens_60"
+        android:textSize="@dimen/dimens_19"
+        app:layout_constraintLeft_toRightOf="@+id/input_bank_card_info_title"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/input_bank_card_info_title"
+        tools:ignore="RtlHardcoded" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/line5"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimens_0.5"
+        android:background="#FFE9E9E9"
+        app:layout_constraintTop_toBottomOf="@+id/input_bank_card_info_title" />
+
+    <!--<LinearLayout-->
+        <!--android:id="@+id/bind_bank_accord"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="@dimen/dimens_13.5"-->
+        <!--android:minHeight="@dimen/dimens_22"-->
+        <!--android:orientation="horizontal"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/input_bank_card_phone_info">-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/bind_bank_icon"-->
+            <!--android:layout_width="@dimen/dimens_11"-->
+            <!--android:layout_height="@dimen/dimens_11"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:src="@mipmap/user_protocol_uncheck" />-->
+
+        <!--<android.support.v7.widget.AppCompatTextView-->
+            <!--android:id="@+id/bind_bank_accord_info"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="@dimen/dimens_5"-->
+            <!--android:layout_marginStart="@dimen/dimens_5" />-->
+    <!--</LinearLayout>-->
+
+    <TextView
+        android:id="@+id/bind_bank_ok"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimens_44"
+        android:gravity="center"
+        android:minHeight="@dimen/dimens_44"
+        android:text="下一步"
+        android:textColor="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@+id/line5" />
+
+    <!--<LinearLayout-->
+        <!--android:id="@+id/bind_bank_phone_hint"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginBottom="@dimen/dimens_56.5"-->
+        <!--android:orientation="horizontal"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintRight_toRightOf="parent">-->
+
+        <!--<android.support.v7.widget.AppCompatTextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:minHeight="@dimen/dimens_21"-->
+            <!--android:text="预留手机号说明" />-->
+
+        <!--<android.support.v7.widget.AppCompatImageView-->
+            <!--android:layout_width="@dimen/dimens_16"-->
+            <!--android:layout_height="@dimen/dimens_16"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:layout_marginLeft="@dimen/dimens_3.5"-->
+            <!--android:layout_marginStart="@dimen/dimens_3.5" />-->
+    <!--</LinearLayout>-->
+</android.support.constraint.ConstraintLayout>

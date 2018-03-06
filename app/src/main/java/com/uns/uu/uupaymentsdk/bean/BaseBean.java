@@ -7,20 +7,21 @@ import android.os.Parcelable;
  * Created by zhaoyan on 2018/2/7.
  */
 
-public class BaseBaen implements Parcelable {
-    private String merchantKey="kb201610171300#!!!";         //key
-    private String merchantId = "1120140210111823001";      //商户id
-    private String customerId = "33833";     //用户id
+public class BaseBean implements Parcelable {
+    private String merchantKey="kb201610171300#!!!";        //key
+//    private String merchantId = "1120140210111823001";      //商户id
+    private String merchantId = "2120140610153044001";      //商户id
+    private String customerId = "33833";                    //用户id
 
-    public static final Creator<BaseBaen> CREATOR = new Creator<BaseBaen>() {
+    public static final Creator<BaseBean> CREATOR = new Creator<BaseBean>() {
         @Override
-        public BaseBaen createFromParcel(Parcel in) {
-            return new BaseBaen(in);
+        public BaseBean createFromParcel(Parcel in) {
+            return new BaseBean(in);
         }
 
         @Override
-        public BaseBaen[] newArray(int size) {
-            return new BaseBaen[size];
+        public BaseBean[] newArray(int size) {
+            return new BaseBean[size];
         }
     };
 
@@ -60,10 +61,10 @@ public class BaseBaen implements Parcelable {
         dest.writeString(this.customerId);
     }
 
-    public BaseBaen() {
+    public BaseBean() {
     }
 
-    protected BaseBaen(Parcel in) {
+    protected BaseBean(Parcel in) {
         this.merchantKey = in.readString();
         this.merchantId = in.readString();
         this.customerId = in.readString();

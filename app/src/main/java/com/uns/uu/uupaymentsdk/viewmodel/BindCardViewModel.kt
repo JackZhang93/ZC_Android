@@ -8,6 +8,7 @@ import com.uns.uu.uupaymentsdk.bean.BindCreditCard
 import com.uns.uu.uupaymentsdk.bean.RspInfo
 import com.uns.uu.uupaymentsdk.network.MySubscriber
 import com.uns.uu.uupaymentsdk.network.NetWorkRequest
+import com.uns.uu.uupaymentsdk.utils.MD5
 import com.uns.uu.uupaymentsdk.utils.MyLogger
 
 /**
@@ -22,24 +23,37 @@ class BindCardViewModel : ViewModel() {
     fun bindCreditCard(data: BindCreditCard): MutableLiveData<RspInfo> {
         val liveData = MutableLiveData<RspInfo>()
         val arrayMap = ArrayMap<String, String>()
-        arrayMap.put("merchantId", data.merchantId)
-        arrayMap.put("customerId", data.customerId)
-        arrayMap.put("cardNo", data.cardNo)
-        arrayMap.put("cardType", data.cardType)
-        arrayMap.put("bankCode", data.bankCode)
-        arrayMap.put("phoneNo", data.phoneNo)
-        arrayMap.put("validCode", data.validCode)
-        arrayMap.put("validTime", data.validTime)
-        arrayMap.put("cvv2", data.cvv2)
-        val buffer = StringBuffer().append("merchantId=").append(data.merchantId)
-                .append("&customerId=").append(data.customerId).append("&cardNo=")
-                .append(data.cardNo).append("&cardType=").append(data.cardType)
-                .append("&bankCode=").append(data.bankCode).append("&phoneNo=")
-                .append(data.phoneNo).append("&validCode=").append(data.validCode)
-                .append("&validTime=").append(data.validTime).append("&cvv2=")
-                .append(data.cvv2).append("&merchantKey=").append(data.merchantKey)
-        MyLogger.kLog().d(buffer.toString())
-        arrayMap.put("mac", buffer.toString())
+        arrayMap["merchantId"] = data.merchantId
+        arrayMap["customerId"] = data.customerId
+        arrayMap["cardNo"] = data.cardNo
+        arrayMap["cardType"] = data.cardType
+        arrayMap["bankCode"] = data.bankCode
+        arrayMap["phoneNo"] = data.phoneNo
+        arrayMap["validCode"] = data.validCode
+        arrayMap["validTime"] = data.validTime
+        arrayMap["cvv2"] = data.cvv2
+        val buffer = StringBuffer().append("merchantId=")
+                .append(data.merchantId)
+                .append("&customerId=")
+                .append(data.customerId)
+                .append("&cardNo=")
+                .append(data.cardNo)
+                .append("&cardType=")
+                .append(data.cardType)
+                .append("&bankCode=")
+                .append(data.bankCode)
+                .append("&phoneNo=")
+                .append(data.phoneNo)
+                .append("&validCode=")
+                .append(data.validCode)
+                .append("&validTime=")
+                .append(data.validTime)
+                .append("&cvv2=")
+                .append(data.cvv2)
+                .append("&merchantKey=")
+                .append(data.merchantKey)
+        MyLogger.kLog().d(String.format("mac 是  %s", buffer.toString()))
+        arrayMap["mac"] = MD5.getMD5ofStr(buffer.toString())
         NetWorkRequest.bindCreditCard(arrayMap, object : MySubscriber<RspInfo?>() {
             override fun onNext(t: RspInfo?) {
                 logger.d(t)
@@ -62,22 +76,23 @@ class BindCardViewModel : ViewModel() {
     fun bindBankCard(data: BindBankCard): MutableLiveData<RspInfo> {
         val liveData = MutableLiveData<RspInfo>()
         val arrayMap = ArrayMap<String, String>()
-        arrayMap.put("merchantId", data.merchantId)
-        arrayMap.put("customerId", data.customerId)
-        arrayMap.put("cardNo", data.cardNo)
-        arrayMap.put("cardType", data.cardType)
-        arrayMap.put("bankCode", data.bankCode)
-        arrayMap.put("phoneNo", data.phoneNo)
-        arrayMap.put("validCode", data.validCode)
+        arrayMap["merchantId"] = data.merchantId
+        arrayMap["customerId"] = data.customerId
+        arrayMap["cardNo"] = data.cardNo
+        arrayMap["cardType"] = data.cardType
+        arrayMap["bankCode"] = data.bankCode
+        arrayMap["phoneNo"] = data.phoneNo
+        arrayMap["validCode"] = data.validCode
+        arrayMap["accountType"] = data.accountType
         val buffer = StringBuffer().append("merchantId=").append(data.merchantId)
                 .append("&customerId=").append(data.customerId).append("&cardNo=")
                 .append(data.cardNo).append("&cardType=").append(data.cardType)
                 .append("&bankCode=").append(data.bankCode).append("&phoneNo=")
                 .append(data.phoneNo).append("&validCode=").append(data.validCode)
                 .append("&merchantKey=").append(data.merchantKey)
-        MyLogger.kLog().d(buffer.toString())
-        arrayMap.put("mac", buffer.toString())
-        NetWorkRequest.bindCreditCard(arrayMap, object : MySubscriber<RspInfo?>() {
+        MyLogger.kLog().d(String.format("mac 是  %s", buffer.toString()))
+        arrayMap["mac"] = MD5.getMD5ofStr(buffer.toString())
+        NetWorkRequest.bindCard(arrayMap, object : MySubscriber<RspInfo?>() {
             override fun onNext(t: RspInfo?) {
                 logger.d(t)
                 liveData.postValue(t)
