@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <application
         >
-        <!--<activity android:name=".view.TestActivity">-->
+        <!--<activity android:name="com.uns.uu.test.TestActivity">-->
             <!--<intent-filter>-->
                 <!--<action android:name="android.intent.action.MAIN" />-->
 

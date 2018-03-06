@@ -1,10 +1,10 @@
-package com.uns.uu.uupaymentsdk.view
+package com.uns.uu.test
 
 import android.content.Intent
-import android.graphics.PathMeasure
 import com.uns.uu.uupaymentsdk.R
 import com.uns.uu.uupaymentsdk.bean.BaseBean
 import com.uns.uu.uupaymentsdk.bean.PaySmsBean
+import com.uns.uu.uupaymentsdk.view.*
 import kotlinx.android.synthetic.main.activity_test.*
 
 class TestActivity : BaseActivity() {
@@ -44,6 +44,7 @@ class TestActivity : BaseActivity() {
             intent.putExtra("data", PaySmsBean())
             startActivity(intent)
         }
+
     }
 
     override fun initData() {
