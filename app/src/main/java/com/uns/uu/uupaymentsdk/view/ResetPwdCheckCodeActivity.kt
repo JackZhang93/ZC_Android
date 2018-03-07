@@ -1,5 +1,7 @@
 package com.uns.uu.uupaymentsdk.view
 
+import android.content.ComponentName
+import android.content.Intent
 import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
@@ -13,19 +15,22 @@ import kotlinx.android.synthetic.main.activity_reset_pwd_check_code.*
 /**
  * author: 张承
  * time：2018/2/23
- * des：
+ * des：忘记支付密码通过银行卡，获取手机验证码
  */
 class ResetPwdCheckCodeActivity : BaseActivity() {
     private var canClick: Boolean = false
     private lateinit var refresh: RefreshVerifyCode
     private lateinit var handler: Handler
+    private lateinit var mDialog: HintDialogUtils   //提示框
     override fun getLayout(): Int {
         return R.layout.activity_reset_pwd_check_code
     }
 
     override fun initView() {
+        setTitle("验证手机号")
         handler = Handler()
         refresh = RefreshVerifyCode(tv_get_code, handler)
+        mDialog = HintDialogUtils(this)
         et_code.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
 
@@ -60,12 +65,20 @@ class ResetPwdCheckCodeActivity : BaseActivity() {
         }
 
         tv_get_code_wrong.setOnClickListener {
-            ToastUtils.showToast(baseContext, "收不到验证码")
+            mDialog.apply {
+                setTitle("收不到验证码")
+                setContentArr(true, arrayListOf("请确认当前是否使用银行预留手机号。", "请检查短信是否被手机安全软件拦截。", "若预留手机号已停用，请联系银行客服咨询。"))
+                setLeftOrRight(false, "", true, "")
+            }.showDialog()
         }
 
         tv_check_code_next.setOnClickListener {
             if (canClick) {//跳到com.uns.uu.ui.money.activity.InputPwdResetActivity
-                ToastUtils.showToast(baseContext, "下一步")
+                val intent = Intent()
+                val componentName = ComponentName(packageName,"com.uns.uu.ui.money.activity.InputPwdResetActivity")
+                intent.component = componentName
+                startActivity(intent)
+                finish()
             }
         }
 

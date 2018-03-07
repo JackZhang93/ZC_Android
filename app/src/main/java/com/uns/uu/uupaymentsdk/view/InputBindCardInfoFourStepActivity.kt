@@ -1,5 +1,6 @@
 package com.uns.uu.uupaymentsdk.view
 
+import android.content.ComponentName
 import android.content.Intent
 import com.uns.uu.uupaymentsdk.R
 import com.uns.uu.uupaymentsdk.utils.PatterUtils
@@ -14,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_input_bind_card_four_step.*
 class InputBindCardInfoFourStepActivity : BaseActivity() {
 
     private var isChecked: Boolean = true //用户协议是否被勾选
-    private var bankCard: String = "" //银行卡号
+    private var cardId: String = "" //银行卡号
     private var canClick: Boolean = false
 
     override fun getLayout(): Int {
@@ -22,8 +23,12 @@ class InputBindCardInfoFourStepActivity : BaseActivity() {
     }
 
     override fun initView() {
-        bankCard = intent.getStringExtra("bankCard")
-        tv_card_num.text = "建设银行储蓄卡（6442）"
+        setTitle("验证身份")
+        cardId = intent.getStringExtra("cardId")
+
+        tv_card_num.text = StringBuffer().append(intent.getStringExtra("bankName"))
+                .append(if (intent.getIntExtra("cardType",1) == 1) "借记卡" else "信用卡").append("（")
+                .append(intent.getStringExtra("cardMessage")).append("）").toString()
     }
 
     override fun initData() {
@@ -57,7 +62,11 @@ class InputBindCardInfoFourStepActivity : BaseActivity() {
         }
 
         tv_new_reset_pwd.setOnClickListener {//跳转到com.uns.uu.ui.money.activity.ChooseResetPwdActivity
-            ToastUtils.showToast(baseContext, "换个方式重置密码")
+            val intent = Intent()
+            val componentName = ComponentName(packageName,"com.uns.uu.ui.money.activity.ChooseResetPwdActivity")
+            intent.component = componentName
+            startActivity(intent)
+            finish()
         }
 
     }
