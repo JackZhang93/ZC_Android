@@ -64,7 +64,7 @@ class ResetPwdCheckCodeActivity : BaseActivity() {
         }
 
         tv_check_code_next.setOnClickListener {
-            if (canClick) {//跳到InputPwdResetActivity
+            if (canClick) {//跳到com.uns.uu.ui.money.activity.InputPwdResetActivity
                 ToastUtils.showToast(baseContext, "下一步")
             }
         }

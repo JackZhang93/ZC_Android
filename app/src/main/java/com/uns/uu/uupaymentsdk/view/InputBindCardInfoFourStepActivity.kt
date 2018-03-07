@@ -56,7 +56,7 @@ class InputBindCardInfoFourStepActivity : BaseActivity() {
             }
         }
 
-        tv_new_reset_pwd.setOnClickListener {//跳转到ChooseResetPwdActivity
+        tv_new_reset_pwd.setOnClickListener {//跳转到com.uns.uu.ui.money.activity.ChooseResetPwdActivity
             ToastUtils.showToast(baseContext, "换个方式重置密码")
         }
 
