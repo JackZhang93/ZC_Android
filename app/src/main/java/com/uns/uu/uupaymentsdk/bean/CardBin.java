@@ -5,7 +5,7 @@ package com.uns.uu.uupaymentsdk.bean;
  */
 public class CardBin extends BaseBean {
 
-    private String retCode;
+    private String retCode="";
     private Data data;
 
 
