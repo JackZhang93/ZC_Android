@@ -10,8 +10,8 @@ import android.os.Parcel;
 public class PaySmsBean extends BaseBean {
 
     private String userId;          // Y,       入账方用户ID
-    private String orderId = "UNS20180305160114384";         // Y,       订单号
-    private String orderTime = "20180305141828";       // Y,       订单时间
+    private String orderId = "";         // Y,       订单号
+    private String orderTime = "";       // Y,       订单时间
     private String curType = "CNY";   // Y,       金额类型（CNY）
     private String purpose;         // Y,       目的
     private String amount;          // Y,       金额

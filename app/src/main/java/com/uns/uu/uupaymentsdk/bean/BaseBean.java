@@ -8,10 +8,10 @@ import android.os.Parcelable;
  */
 
 public class BaseBean implements Parcelable {
-    private String merchantKey="kb201610171300#!!!";        //key
-//    private String merchantId = "1120140210111823001";      //商户id
-    private String merchantId = "2120140610153044001";      //商户id
-    private String customerId = "33833";                    //用户id
+    private String merchantKey = "";        //key
+    //    private String merchantId = "1120140210111823001";      //商户id
+    private String merchantId = "";      //商户id
+    private String customerId = "";                    //用户id
 
     public static final Creator<BaseBean> CREATOR = new Creator<BaseBean>() {
         @Override
