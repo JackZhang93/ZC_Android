@@ -1,15 +1,19 @@
 package com.uns.uu.uupaymentsdk.view
 
+import android.arch.lifecycle.Observer
 import android.content.ComponentName
 import android.content.Intent
 import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import com.uns.uu.uupaymentsdk.R
+import com.uns.uu.uupaymentsdk.constant.CardBinConstant
 import com.uns.uu.uupaymentsdk.utils.HintDialogUtils
 import com.uns.uu.uupaymentsdk.utils.RefreshVerifyCode
 import com.uns.uu.uupaymentsdk.utils.ToastUtils
 import com.uns.uu.uupaymentsdk.utils.Utils
+import com.uns.uu.uupaymentsdk.viewmodel.SendSmsViewModel
+import kotlinx.android.synthetic.main.activity_input_bind_card.*
 import kotlinx.android.synthetic.main.activity_reset_pwd_check_code.*
 
 /**
@@ -89,6 +93,17 @@ class ResetPwdCheckCodeActivity : BaseActivity() {
 
     //获取手机验证码
     private fun getVerifyCode() {
+        SendSmsViewModel().sendSmS(intent.getStringExtra("merchantId"),intent
+                .getStringExtra("mobile")).observe(this, Observer {
+            if (CardBinConstant.YES == it?.rspCode) {
+                val intent = Intent(baseContext, ResetPwdCheckCodeActivity::class.java)
+                intent.putExtra("mobile", et_phone.text.toString().trim())
+                startActivity(intent)
+                finish()
+            } else {
+                showTip(it?.rspCode + "")
+            }
+        })
         refresh.sure()
         refresh.setCount(60)
         handler.post(refresh)
