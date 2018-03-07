@@ -93,12 +93,14 @@ class BindCreditBankCardForPayActivity : BaseActivity() {
             }
         })
         UnsViewUtils.nextViewOk(bind_credit_ok, false)
+        //点击下一步按钮
         bind_credit_ok.setOnClickListener {
             //发送支付验证码
             mData.apply {
                 validTime=mValidTime
                 cvv2 = bind_credit_card_cvv2_info.text.toString().trim()
             }
+            //发送信用卡验证码
             SendSmsViewModel().sendPaySmS(mData).observe(this, android.arch.lifecycle.Observer {
 
             })
