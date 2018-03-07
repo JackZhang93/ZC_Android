@@ -157,6 +157,7 @@ class BindCreditBankCardActivity : BaseActivity() {
         }
         imageView.setPadding(0, 0, 0, resources.getDimensionPixelSize(R.dimen.dimens_11))
         imageView.setImageResource(R.mipmap.ic_launcher)
+        //信用卡有效期
         bind_credit_card_time_info_icon.setOnClickListener {
             mDialog.setTitle("有效期说明")
             mDialog.setSelfView(true, arrayOf("有效期是打印在信用卡正面卡号下方，标准格式为月份在前，年份在后的一串数字。"), imageView, false)

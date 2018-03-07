@@ -54,6 +54,7 @@ class CheckSmsActivity : BaseActivity() {
     override fun initData() {
         handler = Handler()
         refresh = RefreshVerifyCode(check_sms_send, handler)
+        //重新发送验证码
         check_sms_send.setOnClickListener {
             check_sms_send.isClickable = false
             //发送短信
@@ -62,16 +63,17 @@ class CheckSmsActivity : BaseActivity() {
 
             })
         }
+        //获取手机验证码
         getVerifyCode()
+        //点击下一步按钮
         check_sms_ok.setOnClickListener {
             if (mType == 2) {
                 val bindCreditCard = intent.getParcelableExtra<BindCreditCard>("data")
-//                bindCreditCard.merchantId="1120140210111823001"
                 //设置验证码
                 bindCreditCard.validCode = bind_credit_sms.text.toString().trim()
                 //设置手机号
                 bindCreditCard.phoneNo = mPhone
-                //邦定信用卡
+                //绑定信用卡
                 BindCardViewModel().bindCreditCard(bindCreditCard).observe(this, Observer {
                     if (Constant.REQ_SUCCESS == it?.rspCode) {
 
@@ -115,7 +117,7 @@ class CheckSmsActivity : BaseActivity() {
                 }
             }
         })
-
+        //短信验证码
         bind_credit_sms.setOnClickListener {
             UnsToast(applicationContext).apply {
                 setText("测试")

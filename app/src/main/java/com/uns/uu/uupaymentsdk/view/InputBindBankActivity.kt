@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.activity_input_card.*
 
 /**
  * Created by zhaoyan on 2018/3/2.
+ * 手动绑卡界面
  *
  */
 class InputBindBankActivity : BaseActivity() {
@@ -47,6 +48,7 @@ class InputBindBankActivity : BaseActivity() {
     override fun initView() {
         input_bank_card_name_info.text = Utils.getName(name)
         UnsViewUtils.nextViewOk(bind_bank_ok, false)
+        //添加卡号检测
         input_bank_card_info.addTextChangedListener(object : SimpleAfterTextWatcher() {
             override fun afterTextChanged(s: Editable?) {
                 hasCard = s?.length ?: 0 >= 16
@@ -57,7 +59,9 @@ class InputBindBankActivity : BaseActivity() {
     }
 
     override fun initData() {
+        //点击下一步按钮
         bind_bank_ok.setOnClickListener {
+            //获取卡片信息
             GetCardInfoViewModel().getCardInfo(input_bank_card_info.text.toString())
                     .observe(this, Observer { card ->
                         when {
@@ -94,7 +98,7 @@ class InputBindBankActivity : BaseActivity() {
                     //没有绑过该卡
                     if (Constant.REQ_SUCCESS == it?.rspCode) {
                         if (card.data.cardType == "0") { //银行卡
-                            //跳转到邦银行卡界面
+                            //跳转到绑银行卡界面
                             val intent = Intent(baseContext, BindBankCardActivity::class.java)
                             intent.putExtra("name", "")
                             intent.putExtra("cardId", input_bank_card_info.text.toString())

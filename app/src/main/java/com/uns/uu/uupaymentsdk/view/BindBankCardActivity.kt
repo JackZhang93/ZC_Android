@@ -139,8 +139,7 @@ class BindBankCardActivity : BaseActivity() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
-
+        //获取卡片信息
         GetCardInfoViewModel().getCardInfo(cardId).observe(this, Observer {
             if (CardBinConstant.YES == it?.retCode) {
                 bind_credit_card_type_info.text = "${it.data?.issName}  ${it.data?.cardTypeName}"
