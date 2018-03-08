@@ -1,12 +1,17 @@
 package com.uns.uu.uupaymentsdk.view
 
+import android.arch.lifecycle.Observer
+import android.content.ComponentName
 import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
 import com.uns.uu.uupaymentsdk.R
+import com.uns.uu.uupaymentsdk.constant.CardBinConstant
 import com.uns.uu.uupaymentsdk.utils.HintDialogUtils
 import com.uns.uu.uupaymentsdk.utils.PatterUtils
 import com.uns.uu.uupaymentsdk.utils.ToastUtils
+import com.uns.uu.uupaymentsdk.viewmodel.SendSmsViewModel
+import kotlinx.android.synthetic.main.activity_input_bank_card.*
 import kotlinx.android.synthetic.main.activity_input_bind_card.*
 
 /**
@@ -17,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_input_bind_card.*
 class InputBindCardInfoActivity : BaseActivity() {
 
     private var isChecked: Boolean = true //用户协议是否被勾选
-    private var bankCard: String = "" //银行卡号
+    private var cardId: String = "" //银行卡号
     private var canClick: Boolean = false
 
     override fun getLayout(): Int {
@@ -25,7 +30,8 @@ class InputBindCardInfoActivity : BaseActivity() {
     }
 
     override fun initView() {
-        bankCard = intent.getStringExtra("bankCard")
+        setTitle("填写银行卡信息")
+        cardId = intent.getStringExtra("cardId")
         et_card_type.text = intent.getStringExtra("cardType")
 
         et_phone.addTextChangedListener(object : TextWatcher {
@@ -70,9 +76,17 @@ class InputBindCardInfoActivity : BaseActivity() {
             if (canClick) {
                 if (isChecked) {
                     if (PatterUtils.Companion.matchPhone(et_phone.text.trim())) {
-                        val intent = Intent(baseContext, ResetPwdCheckCodeActivity::class.java)
-                        intent.putExtra("mobile", et_phone.text.toString().trim())
-                        startActivity(intent)
+                        SendSmsViewModel().sendSmS(intent.getStringExtra("merchantId"),et_phone.text.toString().trim()).observe(this,Observer {
+                            if (CardBinConstant.YES == it?.rspCode) {
+                                val intent = Intent(baseContext, ResetPwdCheckCodeActivity::class.java)
+                                intent.putExtra("mobile", et_phone.text.toString().trim())
+                                startActivity(intent)
+                                finish()
+                            } else {
+                                showTip(it?.rspCode + "")
+                            }
+                        })
+
                     } else {
                         ToastUtils.showToast(this@InputBindCardInfoActivity, "请输入正确手机号")
                     }
@@ -83,8 +97,11 @@ class InputBindCardInfoActivity : BaseActivity() {
         }
 
         tv_new_reset_pwd.setOnClickListener {
-            //跳转到ChooseResetPwdActivity
-            ToastUtils.showToast(baseContext, "换个方式重置密码")
+            val intent = Intent()
+            val componentName = ComponentName(packageName,"com.uns.uu.ui.money.activity.ChooseResetPwdActivity")
+            intent.component = componentName
+            startActivity(intent)
+            finish()
         }
 
     }

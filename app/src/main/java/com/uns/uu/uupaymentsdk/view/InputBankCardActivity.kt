@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.activity_input_bank_card.*
 /**
  * author: 张承
  * time：2018/2/23
- * des：忘记支付密码输入银行卡号
+ * des：输入银行卡号
  */
 class InputBankCardActivity : BaseActivity() {
 
@@ -23,18 +23,21 @@ class InputBankCardActivity : BaseActivity() {
     }
 
     override fun initView() {
-        tv_user_name.text = getHideName("马化腾")
+        setTitle("忘记支付密码")
+        if (intent.hasExtra("userName")) {
+            tv_user_name.text = getHideName(intent.getStringExtra("userName"))
+        }
         tv_input_card_next.setOnClickListener {
             if (canClick) {
-                GetCardInfoViewModel().getCardInfo("6250861322900100").observe(this, Observer {
+                GetCardInfoViewModel().getCardInfo(et_input_bank_card.text.toString()).observe(this, Observer {
                     if (CardBinConstant.YES == it?.retCode) {
                         val intent = Intent(baseContext, InputBindCardInfoActivity::class.java)
-                        intent.putExtra("bankCard", et_input_bank_card.text.toString().trim())
-                        intent.putExtra("cardType","${it.data?.issName}${it.data?.cardTypeName}")
+                        intent.putExtra("cardId", et_input_bank_card.text.toString().trim())
+                        intent.putExtra("cardType", "${it.data?.issName}${it.data?.cardTypeName}")
                         startActivity(intent)
                         finish()
                     } else {
-                        showTip(it?.retCode+"")
+                        showTip(it?.retCode + "")
                     }
                 })
 
@@ -75,9 +78,9 @@ class InputBankCardActivity : BaseActivity() {
         return sb.toString()
     }
 
-    private fun showTip(content:String) {
+    private fun showTip(content: String) {
         val dialog = HintDialogUtils(this)
-        dialog.setLeftOrRight(false,"",true,"知道了")
+        dialog.setLeftOrRight(false, "", true, "知道了")
         dialog.setContent(true, content)
         dialog.showDialog()
     }
