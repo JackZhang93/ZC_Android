@@ -34,9 +34,9 @@ public class BankQuestionActivity extends Activity {
     }
 
     private void initView() {
-        webView = findViewById(R.id.wv_web);
-        tv_title = findViewById(R.id.tv_title);
-        iv_back = findViewById(R.id.iv_back);
+        webView = (WebView) findViewById(R.id.wv_web);
+        tv_title = (TextView) findViewById(R.id.tv_title);
+        iv_back = (ImageView) findViewById(R.id.iv_back);
         tv_title.setText("银行卡问题");
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -26,6 +26,7 @@ import kotlinx.android.synthetic.main.activity_input_card.*
 class InputBindBankActivity : BaseActivity() {
     private var hasCard: Boolean = false
     private lateinit var mBaseData: BaseBean
+    private lateinit var mCheckCard: CheckCard
     private var name: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         if (intent.hasExtra("name")) {
@@ -35,6 +36,11 @@ class InputBindBankActivity : BaseActivity() {
         }
         if (intent.hasExtra("data")) {
             mBaseData = intent.getParcelableExtra("data")
+            mCheckCard = CheckCard().apply {
+                merchantId = mBaseData.merchantId
+                customerId = mBaseData.customerId
+                merchantKey = mBaseData.merchantKey
+            }
         } else {
             throw NullPointerException("data is NULL")
         }
@@ -92,8 +98,9 @@ class InputBindBankActivity : BaseActivity() {
 
     //检查卡片是否绑定
     private fun checkCard(card: CardBin) {
-        GetCardInfoViewModel().validCardNo(CheckCard(input_bank_card_info
-                .text.toString()))
+        mCheckCard.cardNo = input_bank_card_info
+                .text.toString()
+        GetCardInfoViewModel().validCardNo(mCheckCard)
                 .observe(this, Observer {
                     //没有绑过该卡
                     if (Constant.REQ_SUCCESS == it?.rspCode) {

@@ -31,6 +31,7 @@ class BindBankCardActivity : BaseActivity() {
     private lateinit var mData: BindBankCard
     private lateinit var mDialog: HintDialogUtils
     private lateinit var mBaseData: BaseBean
+    private lateinit var mCheckCard: CheckCard
     private var isClick: Boolean = false //是否同意条款
     private var cardId: String = ""
     override fun getLayout(): Int {
@@ -46,6 +47,11 @@ class BindBankCardActivity : BaseActivity() {
         if (intent.hasExtra("data")) {
             mBaseData = intent.getParcelableExtra("data")
             mData = BindBankCard().apply {
+                merchantKey = mBaseData.merchantKey
+                merchantId = mBaseData.merchantId
+                customerId = mBaseData.customerId
+            }
+            mCheckCard = CheckCard().apply {
                 merchantKey = mBaseData.merchantKey
                 merchantId = mBaseData.merchantId
                 customerId = mBaseData.customerId
@@ -99,12 +105,14 @@ class BindBankCardActivity : BaseActivity() {
         //跳转到验证短信验证码界面
         bind_bank_ok.setOnClickListener {
             if (PatterUtils.Companion.matchPhone(bind_credit_card_phone_info.text.trim())) {
-                GetCardInfoViewModel().validCardNo(CheckCard(cardId)).observe(this, Observer {
+                mCheckCard.cardNo = cardId
+                GetCardInfoViewModel().validCardNo(mCheckCard).observe(this, Observer {
                     if (Constant.REQ_SUCCESS == it?.rspCode) {
                         val intent = Intent(baseContext, CheckSmsActivity::class.java)
                         intent.putExtra("phone", bind_credit_card_phone_info.text.trim().toString())
                         intent.putExtra("type", 1)
                         intent.putExtra("data", mData)
+                        intent.putExtra("merchantId", mData.merchantId)
                         startActivity(intent)
                     } else {
                         ToastUtils.showToast(this@BindBankCardActivity, it?.rspMsg)

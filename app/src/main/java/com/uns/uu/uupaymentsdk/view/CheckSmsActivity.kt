@@ -28,6 +28,7 @@ import kotlinx.android.synthetic.main.activity_check_sms.*
  */
 class CheckSmsActivity : BaseActivity() {
     private lateinit var mPhone: String             //手机号码
+    private lateinit var merchantId: String         //商户号
     private lateinit var mDialog: HintDialogUtils   //提示框
     private var mType = -1                          //类型
     private lateinit var refresh: RefreshVerifyCode
@@ -45,6 +46,7 @@ class CheckSmsActivity : BaseActivity() {
     @SuppressLint("SetTextI18n")
     override fun initView() {
         mPhone = intent.getStringExtra("phone") ?: ""
+        merchantId = intent.getStringExtra("merchantId") ?: ""
         @Suppress("RemoveCurlyBracesFromTemplate")
         bind_credit_info.text = "绑定银行卡需要短信确认，验证码已发送至\n" +
                 "手机：${Utils.getTel(mPhone)}，请按提示操作。"
@@ -55,11 +57,16 @@ class CheckSmsActivity : BaseActivity() {
         handler = Handler()
         refresh = RefreshVerifyCode(check_sms_send, handler)
         //重新发送验证码
+        check_sms_send.isClickable = false
+        getVerifyCode()
+        SendSmsViewModel().sendSmS(merchantId, mPhone).observe(this, Observer {
+
+        })
         check_sms_send.setOnClickListener {
             check_sms_send.isClickable = false
             //发送短信
             getVerifyCode()
-            SendSmsViewModel().sendSmS("1120140210111823001", mPhone).observe(this, Observer {
+            SendSmsViewModel().sendSmS(merchantId, mPhone).observe(this, Observer {
 
             })
         }

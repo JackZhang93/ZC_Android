@@ -40,6 +40,7 @@ class BindCreditBankCardActivity : BaseActivity() {
     private lateinit var mData: BindCreditCard
     private lateinit var mDialog: HintDialogUtils
     private lateinit var mBaseData: BaseBean
+    private lateinit var mCheckCard: CheckCard
     private var hasDate: Boolean = false //有效期
     private var hasCvv2: Boolean = false //cvv2
     private var isClick: Boolean = false //是否同意条款
@@ -63,7 +64,12 @@ class BindCreditBankCardActivity : BaseActivity() {
             mData = BindCreditCard().apply {
                 merchantId = mBaseData.merchantId
                 customerId = mBaseData.customerId
-                merchantId = mBaseData.merchantKey
+                merchantKey = mBaseData.merchantKey
+            }
+            mCheckCard = CheckCard().apply {
+                merchantId = mBaseData.merchantId
+                customerId = mBaseData.customerId
+                merchantKey = mBaseData.merchantKey
             }
         } else {
             throw NullPointerException("data is NULL")
@@ -122,11 +128,13 @@ class BindCreditBankCardActivity : BaseActivity() {
         //下一步
         bind_credit_ok.setOnClickListener {
             //检查卡片是否绑定
-            GetCardInfoViewModel().validCardNo(CheckCard(cardId)).observe(this, Observer {
+            mCheckCard.cardNo=cardId
+            GetCardInfoViewModel().validCardNo(mCheckCard).observe(this, Observer {
                 if (Constant.REQ_SUCCESS == it?.rspCode) {
                     val intent = Intent(baseContext, CheckSmsActivity::class.java)
                     intent.putExtra("phone", bind_credit_card_phone_info.text.trim().toString())
                     intent.putExtra("type", 2)
+                    intent.putExtra("merchantId", mData.merchantId)
                     mData.apply {
                         validTime = mValidTime
                         cvv2 = bind_credit_card_cvv2_info.text.toString().trim()

@@ -8,6 +8,7 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import com.uns.uu.uupaymentsdk.R
 import com.uns.uu.uupaymentsdk.utils.HideKey
+import com.uns.uu.uupaymentsdk.utils.MyLogger
 import kotlinx.android.synthetic.main.activity_base.*
 
 abstract class BaseActivity : AppCompatActivity() {
