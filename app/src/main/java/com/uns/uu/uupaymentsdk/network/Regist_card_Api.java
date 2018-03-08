@@ -25,7 +25,7 @@ public interface Regist_card_Api {
     //绑定信用卡发送短信
     @POST(Api.BIN_CREDIT_CARD_SEND_SMS_CODE)
     Observable<RspInfo> bindCreditCardSendMsg(@QueryMap Map<String, String> map);
-
+    //验证卡片是否能够绑定
     @POST(Api.VALID_CARD_NO)
     Observable<RspInfo> validCardNo(@QueryMap Map<String, String> map);
 }

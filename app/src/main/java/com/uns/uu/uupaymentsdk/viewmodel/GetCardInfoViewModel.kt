@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModel
 import android.support.v4.util.ArrayMap
 import com.uns.uu.uupaymentsdk.bean.CardBin
 import com.uns.uu.uupaymentsdk.bean.CheckCard
+import com.uns.uu.uupaymentsdk.bean.PwdOldCard
 import com.uns.uu.uupaymentsdk.bean.RspInfo
 import com.uns.uu.uupaymentsdk.network.MySubscriber
 import com.uns.uu.uupaymentsdk.network.NetWorkRequest
@@ -71,4 +72,50 @@ class GetCardInfoViewModel : ViewModel() {
         }.start()
         return data
     }
+
+    /**
+     * 旧卡验证
+     * @param bean 参数
+     */
+    fun pwdOldCardIdentifyCode(bean: PwdOldCard): MutableLiveData<RspInfo> {
+        val data = MutableLiveData<RspInfo>()
+        Utils.getThread {
+            val arrayMap = ArrayMap<String, String>()
+            arrayMap["merchantId"] = bean.merchantId
+            arrayMap["customerId"] = bean.customerId
+            arrayMap["bankCardId"] = bean.bankCardId
+            arrayMap["cardNo"] = bean.cardNo
+            arrayMap["cardType"] = bean.cardType
+            arrayMap["phoneNo"] = bean.phoneNo
+            arrayMap["validCode"] = bean.validCode
+            arrayMap["idCode"] = bean.idCode
+            arrayMap["name"] = bean.name
+            val mac = StringBuffer()
+            mac.append("merchantId=").append(bean.merchantId)
+            mac.append("&customerId=").append(bean.merchantId)
+            mac.append("&bankCardId=").append(bean.bankCardId)
+            mac.append("&cardNo=").append(bean.cardNo)
+            mac.append("&cardType=").append(bean.cardType)
+            mac.append("&phoneNo=").append(bean.phoneNo)
+            mac.append("&validCode=").append(bean.validCode)
+            mac.append("&idCode=").append(bean.idCode)
+            mac.append("&name=").append(bean.name)
+            mac.append("&merchantKey=").append(bean.merchantKey)
+            MyLogger.kLog().d(String.format("mac 是  %s", mac))
+            arrayMap["mac"] = MD5.getMD5ofStr(mac.toString())
+            NetWorkRequest.validCardNo(arrayMap, object : MySubscriber<RspInfo?>() {
+                override fun onNext(t: RspInfo?) {
+                    logger.d(t?.toString())
+                    data.postValue(t)
+                }
+
+                override fun onError(e: Throwable?) {
+                    super.onError(e)
+                    data.postValue(RspInfo())
+                }
+            })
+        }.start()
+        return data
+    }
+
 }

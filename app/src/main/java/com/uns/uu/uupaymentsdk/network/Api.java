@@ -68,7 +68,7 @@ public class Api {
     public static final String VALID_CARD_NO = "wallet/validcardNo";
     //绑定行用卡发送验证码
     public static final String BIN_CREDIT_CARD_SEND_SMS_CODE = "wallet/getVericode";
-//
+    //
 //	//转账（bank to user）交易冻结
 //	public static final String TRAN_B2U = "walletSdk/transferFrozenByBank";
 //
@@ -81,8 +81,8 @@ public class Api {
 //	//转账 （user to user）无冻结
 //	public static final String TRAN_U2U_UNWITH = "walletSdk/syncTransfer";
 //
-//	//旧卡验证
-//	public static final String PWD_OLD_CARD_IDENTIFY_CODE = "wallet/forgetPwdForCardNo";
+    //旧卡验证
+    public static final String PWD_OLD_CARD_IDENTIFY_CODE = "wallet/forgetPwdForCardNo";
 //
 //	//发红包(余额)
 //	public static final String SEND_RED_PACKET = "walletSdk/sendEnvelope";

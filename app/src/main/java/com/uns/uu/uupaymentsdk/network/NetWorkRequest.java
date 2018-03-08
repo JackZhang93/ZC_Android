@@ -85,8 +85,8 @@ public class NetWorkRequest {
      * @param subscriber *
      */
     public static synchronized void bindCreditCardsendSms(Map<String, String> map,
-                                                        Subscriber<RspInfo>
-            subscriber) {
+                                                          Subscriber<RspInfo>
+                                                                  subscriber) {
         RxUtils.unsubscribe();
         RxUtils.subscription = NetWork.getRegist_card_Api().bindCreditCardSendMsg(map).subscribeOn
                 (Schedulers.io())
@@ -104,6 +104,20 @@ public class NetWorkRequest {
         RxUtils.unsubscribe();
         RxUtils.subscription = NetWork.getRegist_card_Api().validCardNo(map).subscribeOn
                 (Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
+    /**
+     * 旧卡验证
+     *
+     * @param map
+     * @param subscriber
+     */
+    public static synchronized void pwdOldCardIdentifyCode(Map<String, String> map, Subscriber<RspInfo> subscriber) {
+        RxUtils.unsubscribe();
+        RxUtils.subscription = NetWork.getRequest_card_api().pwdOldCardIdentifyCode(map)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
     }
