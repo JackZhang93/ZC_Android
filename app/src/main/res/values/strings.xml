@@ -4,4 +4,5 @@
     <string name="add_bank_card">填写银行卡信息</string>
     <string name="input_phone">输入预留手机号</string>
     <string name="bankCardType">卡类型</string>
+    <string name="message_permission_always_failed">我们需要以下权限，请在设置中为我们开启：\n\n%1$s</string>
 </resources>
